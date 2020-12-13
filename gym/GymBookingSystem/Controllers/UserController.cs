@@ -19,7 +19,7 @@ namespace GymBookingSystem.Controllers
             _UserService = UserService;
         }
 
-        [HttpPost("create")]
+        [HttpPost("CreateUser")]
         public IActionResult CreateUser(UserDto dto)
         {
             User u = _UserService.CreateUser(dto);
@@ -30,6 +30,20 @@ namespace GymBookingSystem.Controllers
             else
             {
                 return Created("yay", u);
+            }
+        }
+
+        [HttpPost("CreateGym")]
+        public IActionResult CreateGym(GymDto dto)
+        {
+            Gym g = _UserService.CreateGym(dto);
+            if (g == null)
+            {
+                return BadRequest();
+            }
+            else
+            {
+                return Created("yay", g);
             }
         }
         

@@ -65,5 +65,24 @@ namespace GymBookingSystem.Services
                 return "Failed to change password ";
             }
         }
+
+        public Gym CreateGym(GymDto dto)
+        {
+            Gym G = new Gym()
+            {
+                Name = dto.Name,
+                StreetAdress = dto.StreetAdress,
+                PostalCode = dto.PostalCode,
+                City = dto.City,
+                MaxPeople = dto.MaxPeople,
+                Email = dto.Email,
+                PhoneNumber = dto.PhoneNumber
+            };
+
+            _context.Gyms.Add(G);
+            _context.SaveChanges();
+
+            return G;
+        }
     }
 }

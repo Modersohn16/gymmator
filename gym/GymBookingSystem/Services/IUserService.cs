@@ -11,5 +11,6 @@ namespace GymBookingSystem.Services
         User CreateUser(UserDto dto);
         int Login(string username, string password);
         string ChangePassword(int userId, string newPassword, string oldPassword);
+        Gym CreateGym(GymDto dto);
     }
 }
