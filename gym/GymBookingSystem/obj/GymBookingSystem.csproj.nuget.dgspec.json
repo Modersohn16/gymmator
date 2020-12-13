@@ -1,37 +1,35 @@
 {
   "format": 1,
   "restore": {
-    "H:\\gym\\GymBookingSystem\\GymBookingSystem.csproj": {}
+    "E:\\programmerings projekt\\gym system with Danne\\gym\\GymBookingSystem\\GymBookingSystem.csproj": {}
   },
   "projects": {
-    "H:\\gym\\GymBookingSystem\\GymBookingSystem.csproj": {
+    "E:\\programmerings projekt\\gym system with Danne\\gym\\GymBookingSystem\\GymBookingSystem.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "H:\\gym\\GymBookingSystem\\GymBookingSystem.csproj",
+        "projectUniqueName": "E:\\programmerings projekt\\gym system with Danne\\gym\\GymBookingSystem\\GymBookingSystem.csproj",
         "projectName": "GymBookingSystem",
-        "projectPath": "H:\\gym\\GymBookingSystem\\GymBookingSystem.csproj",
-        "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
-        "outputPath": "H:\\gym\\GymBookingSystem\\obj\\",
+        "projectPath": "E:\\programmerings projekt\\gym system with Danne\\gym\\GymBookingSystem\\GymBookingSystem.csproj",
+        "packagesPath": "C:\\Users\\Ines\\.nuget\\packages\\",
+        "outputPath": "E:\\programmerings projekt\\gym system with Danne\\gym\\GymBookingSystem\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
-          "C:\\Microsoft\\Xamarin\\NuGet\\",
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
         ],
         "configFilePaths": [
-          "C:\\Users\\User\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
+          "C:\\Users\\Ines\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "netcoreapp2.2"
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "http://nuget.systest.mrm.sverigesingenjorer.se/nuget/": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "netcoreapp2.2": {
+            "targetAlias": "netcoreapp2.2",
             "projectReferences": {}
           }
         },
@@ -43,6 +41,7 @@
       },
       "frameworks": {
         "netcoreapp2.2": {
+          "targetAlias": "netcoreapp2.2",
           "dependencies": {
             "Microsoft.AspNetCore.App": {
               "suppressParent": "All",
@@ -88,7 +87,7 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.201\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.101\\RuntimeIdentifierGraph.json"
         }
       }
     }

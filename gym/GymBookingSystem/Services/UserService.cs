@@ -26,13 +26,44 @@ namespace GymBookingSystem.Services
             };
 
             LoginCredentials lc = new LoginCredentials();
+            _context.Users.Add(U);
+            _context.SaveChanges();
+
+            lc.UserId = U.UserId;
             lc.Username = dto.Username;
             lc.Password = dto.Password;
 
-            _context.Users.Add(U);
             _context.LoginCredentials.Add(lc);
             _context.SaveChanges();
             return U;
+        }
+
+
+        public int Login(string username, string password)
+        {         
+           LoginCredentials lc = _context.LoginCredentials.Where(x => x.Username == username && x.Password == password).FirstOrDefault();
+           
+            if (lc != null)
+                return lc.UserId;
+           else
+                return 0;
+        }
+
+        public string ChangePassword(int userId, string newPassword, string oldPassword)
+        {
+            LoginCredentials lc = _context.LoginCredentials.Where(x => x.UserId == userId && x.Password == oldPassword).FirstOrDefault();
+            
+            if (lc != null)
+            {
+                lc.Password = newPassword;
+                _context.Update(lc);
+                _context.SaveChanges();
+                return "Password changed successfully";
+            }
+            else
+            {
+                return "Failed to change password ";
+            }
         }
     }
 }
