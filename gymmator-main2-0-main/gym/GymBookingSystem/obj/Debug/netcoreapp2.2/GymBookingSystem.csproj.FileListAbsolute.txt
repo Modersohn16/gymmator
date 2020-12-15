@@ -1,0 +1,75 @@
+H:\gym\GymBookingSystem\bin\Debug\netcoreapp2.2\appsettings.Development.json
+H:\gym\GymBookingSystem\bin\Debug\netcoreapp2.2\appsettings.json
+H:\gym\GymBookingSystem\bin\Debug\netcoreapp2.2\Properties\launchSettings.json
+H:\gym\GymBookingSystem\bin\Debug\netcoreapp2.2\GymBookingSystem.deps.json
+H:\gym\GymBookingSystem\bin\Debug\netcoreapp2.2\GymBookingSystem.runtimeconfig.json
+H:\gym\GymBookingSystem\bin\Debug\netcoreapp2.2\GymBookingSystem.runtimeconfig.dev.json
+H:\gym\GymBookingSystem\bin\Debug\netcoreapp2.2\GymBookingSystem.dll
+H:\gym\GymBookingSystem\obj\Debug\netcoreapp2.2\GymBookingSystem.csprojAssemblyReference.cache
+H:\gym\GymBookingSystem\obj\Debug\netcoreapp2.2\GymBookingSystem.RazorAssemblyInfo.cache
+H:\gym\GymBookingSystem\obj\Debug\netcoreapp2.2\GymBookingSystem.RazorAssemblyInfo.cs
+H:\gym\GymBookingSystem\obj\Debug\netcoreapp2.2\GymBookingSystem.AssemblyInfoInputs.cache
+H:\gym\GymBookingSystem\obj\Debug\netcoreapp2.2\GymBookingSystem.AssemblyInfo.cs
+H:\gym\GymBookingSystem\obj\Debug\netcoreapp2.2\GymBookingSystem.TagHelpers.input.cache
+H:\gym\GymBookingSystem\obj\Debug\netcoreapp2.2\GymBookingSystem.TagHelpers.output.cache
+H:\gym\GymBookingSystem\obj\Debug\netcoreapp2.2\GymBookingSystem.RazorCoreGenerate.cache
+H:\gym\GymBookingSystem\obj\Debug\netcoreapp2.2\Razor\Views\Home\Index.cshtml.g.cs
+H:\gym\GymBookingSystem\obj\Debug\netcoreapp2.2\Razor\Views\Home\Privacy.cshtml.g.cs
+H:\gym\GymBookingSystem\obj\Debug\netcoreapp2.2\Razor\Views\Shared\_CookieConsentPartial.cshtml.g.cs
+H:\gym\GymBookingSystem\obj\Debug\netcoreapp2.2\Razor\Views\Shared\_Layout.cshtml.g.cs
+H:\gym\GymBookingSystem\obj\Debug\netcoreapp2.2\Razor\Views\Shared\_ValidationScriptsPartial.cshtml.g.cs
+H:\gym\GymBookingSystem\obj\Debug\netcoreapp2.2\Razor\Views\_ViewImports.cshtml.g.cs
+H:\gym\GymBookingSystem\obj\Debug\netcoreapp2.2\Razor\Views\_ViewStart.cshtml.g.cs
+H:\gym\GymBookingSystem\obj\Debug\netcoreapp2.2\GymBookingSystem.RazorTargetAssemblyInfo.cache
+H:\gym\GymBookingSystem\obj\Debug\netcoreapp2.2\GymBookingSystem.RazorTargetAssemblyInfo.cs
+H:\gym\GymBookingSystem\obj\Debug\netcoreapp2.2\GymBookingSystem.genruntimeconfig.cache
+H:\gym\GymBookingSystem\obj\Debug\netcoreapp2.2\GymBookingSystem.dll
+H:\gym\GymBookingSystem\obj\Debug\netcoreapp2.2\GymBookingSystem.pdb
+H:\gym\GymBookingSystem\bin\Debug\netcoreapp2.2\GymBookingSystem.pdb
+H:\gym\GymBookingSystem\bin\Debug\netcoreapp2.2\GymBookingSystem.Views.dll
+H:\gym\GymBookingSystem\bin\Debug\netcoreapp2.2\GymBookingSystem.Views.pdb
+H:\gym\GymBookingSystem\obj\Debug\netcoreapp2.2\GymBookingSystem.Views.pdb
+H:\gym\GymBookingSystem\obj\Debug\netcoreapp2.2\GymBookingSystem.csproj.CopyComplete
+H:\gym\GymBookingSystem\obj\Debug\netcoreapp2.2\GymBookingSystem.csproj.CoreCompileInputs.cache
+E:\programmerings projekt\gym system with Danne\gym\GymBookingSystem\obj\Debug\netcoreapp2.2\GymBookingSystem.csprojAssemblyReference.cache
+E:\programmerings projekt\gym system with Danne\gym\GymBookingSystem\obj\Debug\netcoreapp2.2\GymBookingSystem.AssemblyInfoInputs.cache
+E:\programmerings projekt\gym system with Danne\gym\GymBookingSystem\obj\Debug\netcoreapp2.2\GymBookingSystem.AssemblyInfo.cs
+E:\programmerings projekt\gym system with Danne\gym\GymBookingSystem\obj\Debug\netcoreapp2.2\GymBookingSystem.csproj.CoreCompileInputs.cache
+E:\programmerings projekt\gym system with Danne\gym\GymBookingSystem\obj\Debug\netcoreapp2.2\GymBookingSystem.RazorAssemblyInfo.cache
+E:\programmerings projekt\gym system with Danne\gym\GymBookingSystem\obj\Debug\netcoreapp2.2\GymBookingSystem.RazorAssemblyInfo.cs
+E:\programmerings projekt\gym system with Danne\gym\GymBookingSystem\obj\Debug\netcoreapp2.2\GymBookingSystem.TagHelpers.input.cache
+E:\programmerings projekt\gym system with Danne\gym\GymBookingSystem\obj\Debug\netcoreapp2.2\GymBookingSystem.dll
+E:\programmerings projekt\gym system with Danne\gym\GymBookingSystem\obj\Debug\netcoreapp2.2\GymBookingSystem.pdb
+E:\programmerings projekt\gym system with Danne\gym\GymBookingSystem\bin\Debug\netcoreapp2.2\appsettings.Development.json
+E:\programmerings projekt\gym system with Danne\gym\GymBookingSystem\bin\Debug\netcoreapp2.2\appsettings.json
+E:\programmerings projekt\gym system with Danne\gym\GymBookingSystem\bin\Debug\netcoreapp2.2\GymBookingSystem.deps.json
+E:\programmerings projekt\gym system with Danne\gym\GymBookingSystem\bin\Debug\netcoreapp2.2\GymBookingSystem.runtimeconfig.json
+E:\programmerings projekt\gym system with Danne\gym\GymBookingSystem\bin\Debug\netcoreapp2.2\GymBookingSystem.runtimeconfig.dev.json
+E:\programmerings projekt\gym system with Danne\gym\GymBookingSystem\bin\Debug\netcoreapp2.2\GymBookingSystem.dll
+E:\programmerings projekt\gym system with Danne\gym\GymBookingSystem\bin\Debug\netcoreapp2.2\GymBookingSystem.pdb
+E:\programmerings projekt\gym system with Danne\gym\GymBookingSystem\bin\Debug\netcoreapp2.2\GymBookingSystem.Views.dll
+E:\programmerings projekt\gym system with Danne\gym\GymBookingSystem\bin\Debug\netcoreapp2.2\GymBookingSystem.Views.pdb
+E:\programmerings projekt\gym system with Danne\gym\GymBookingSystem\obj\Debug\netcoreapp2.2\GymBookingSystem.TagHelpers.output.cache
+E:\programmerings projekt\gym system with Danne\gym\GymBookingSystem\obj\Debug\netcoreapp2.2\GymBookingSystem.RazorCoreGenerate.cache
+E:\programmerings projekt\gym system with Danne\gym\GymBookingSystem\obj\Debug\netcoreapp2.2\Razor\Views\Home\Index.cshtml.g.cs
+E:\programmerings projekt\gym system with Danne\gym\GymBookingSystem\obj\Debug\netcoreapp2.2\Razor\Views\Home\Privacy.cshtml.g.cs
+E:\programmerings projekt\gym system with Danne\gym\GymBookingSystem\obj\Debug\netcoreapp2.2\Razor\Views\Shared\_CookieConsentPartial.cshtml.g.cs
+E:\programmerings projekt\gym system with Danne\gym\GymBookingSystem\obj\Debug\netcoreapp2.2\Razor\Views\Shared\_Layout.cshtml.g.cs
+E:\programmerings projekt\gym system with Danne\gym\GymBookingSystem\obj\Debug\netcoreapp2.2\Razor\Views\Shared\_ValidationScriptsPartial.cshtml.g.cs
+E:\programmerings projekt\gym system with Danne\gym\GymBookingSystem\obj\Debug\netcoreapp2.2\Razor\Views\_ViewImports.cshtml.g.cs
+E:\programmerings projekt\gym system with Danne\gym\GymBookingSystem\obj\Debug\netcoreapp2.2\Razor\Views\_ViewStart.cshtml.g.cs
+E:\programmerings projekt\gym system with Danne\gym\GymBookingSystem\obj\Debug\netcoreapp2.2\GymBookingSystem.RazorTargetAssemblyInfo.cache
+E:\programmerings projekt\gym system with Danne\gym\GymBookingSystem\obj\Debug\netcoreapp2.2\GymBookingSystem.RazorTargetAssemblyInfo.cs
+E:\programmerings projekt\gym system with Danne\gym\GymBookingSystem\obj\Debug\netcoreapp2.2\GymBookingSystem.Views.pdb
+E:\programmerings projekt\gym system with Danne\gym\GymBookingSystem\obj\Debug\netcoreapp2.2\GymBookingSystem.genruntimeconfig.cache
+E:\programmerings projekt\gym system with Danne\gym\GymBookingSystem\obj\Debug\netcoreapp2.2\GymBookingSystem.csproj.CopyComplete
+C:\Users\heavy\OneDrive\Skrivbord\Ny mapp (3)\gymmator-main\gym\GymBookingSystem\obj\Debug\netcoreapp2.2\GymBookingSystem.csprojAssemblyReference.cache
+C:\Users\heavy\OneDrive\Skrivbord\Ny mapp (3)\gymmator-main\gym\GymBookingSystem\obj\Debug\netcoreapp2.2\GymBookingSystem.AssemblyInfoInputs.cache
+C:\Users\heavy\OneDrive\Skrivbord\Ny mapp (3)\gymmator-main\gym\GymBookingSystem\obj\Debug\netcoreapp2.2\GymBookingSystem.AssemblyInfo.cs
+C:\Users\heavy\OneDrive\Skrivbord\Ny mapp (3)\gymmator-main\gym\GymBookingSystem\obj\Debug\netcoreapp2.2\GymBookingSystem.csproj.CoreCompileInputs.cache
+C:\Users\heavy\OneDrive\Skrivbord\Ny mapp (3)\gymmator-main\gym\GymBookingSystem\obj\Debug\netcoreapp2.2\GymBookingSystem.RazorAssemblyInfo.cache
+C:\Users\heavy\OneDrive\Skrivbord\Ny mapp (3)\gymmator-main\gym\GymBookingSystem\obj\Debug\netcoreapp2.2\GymBookingSystem.RazorAssemblyInfo.cs
+C:\Users\heavy\OneDrive\Skrivbord\Ny mapp (3)\gymmator-main\gym\GymBookingSystem\obj\Debug\netcoreapp2.2\GymBookingSystem.TagHelpers.input.cache
+C:\Users\heavy\OneDrive\Skrivbord\Ny mapp (3)\gymmator-main\gym\GymBookingSystem\obj\Debug\netcoreapp2.2\GymBookingSystem.TagHelpers.output.cache
+C:\Users\heavy\OneDrive\Skrivbord\Ny mapp (3)\gymmator-main\gym\GymBookingSystem\obj\Debug\netcoreapp2.2\GymBookingSystem.dll
+C:\Users\heavy\OneDrive\Skrivbord\Ny mapp (3)\gymmator-main\gym\GymBookingSystem\obj\Debug\netcoreapp2.2\GymBookingSystem.pdb

@@ -1,0 +1,16 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\gym",
+    "\\gym\\GymBookingSystem",
+    "\\gym\\GymBookingSystem\\obj",
+    "\\gym\\GymBookingSystem\\Properties",
+    "\\gym\\GymBookingSystem\\Views\\Home",
+    "\\gym\\GymBookingSystem\\Views\\Shared",
+    "\\gym\\GymBookingSystem\\wwwroot\\css",
+    "\\gym\\GymBookingSystem\\wwwroot\\js",
+    "\\gym\\GymBookingSystem\\wwwroot\\lib"
+  ],
+  "SelectedNode": "\\gym\\GymBookingSystem\\GymBookingSystem.sln",
+  "PreviewInSolutionExplorer": false
+}
