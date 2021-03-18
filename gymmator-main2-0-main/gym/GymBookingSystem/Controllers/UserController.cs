@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using GymBookingSystem.Models;
+using GymBookingSystem.Models.DTO;
 using GymBookingSystem.Services;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -50,14 +52,14 @@ namespace GymBookingSystem.Controllers
         [HttpGet("login")]
         public IActionResult Login(string username, string password) 
         {
-            int userID = _UserService.Login(username, password);
-            if(userID == 0)
+            User user = _UserService.Login(username, password);
+            if(user == null)
             {
                 return BadRequest();
             }
             else
             {
-                return Ok(userID);
+                return Ok(user);
             }
 
         }
@@ -77,39 +79,130 @@ namespace GymBookingSystem.Controllers
 
         }
 
+        [HttpPost("CreateTrainingClass")]
+        public IActionResult CreateTrainingClass(TrainingClassDto dto)
+        {
+            TrainingClass t = _UserService.CreateTrainingClass(dto);
+            if (t == null)
+            {
+                return BadRequest();
+            }
+            else
+            {
+                return Created("yay", t);
+            }
+        }
+
+        [HttpGet("GetTrainingClass")]
+        public IActionResult GetTrainingClass(int Id)
+        {
+            TrainingClass t = _UserService.GetTrainingClass(Id);
+            if (t == null)
+            {
+                return BadRequest();
+            }
+            else
+            {
+                return Ok(t);
+            }
+        }
+
+        [HttpGet("GetTrainingClasses")]
+        public IActionResult GetTrainingClasses()
+        {
+            List<TrainingClass> t = _UserService.GetTrainingClasses();
+            if (t == null)
+            {
+                return BadRequest();
+            }
+            else
+            {
+                return Ok(t);
+            }
+        }
+
+        [EnableCors("MyPolicy")]
+        [HttpGet("GetGym")]
+        public IActionResult GetGym()
+        {
+            List<Gym> g = _UserService.GetGyms();
+            if (g == null)
+            {
+                return BadRequest();
+            }
+            else return Ok(g);
+        }
+
+        [HttpGet("GetTrainingClassesAtGym")]
+        public IActionResult GetTrainingClassesAtGym(int GymId)
+        {
+            List<TrainingClass> t = _UserService.GetTrainingClassesAtGym(GymId);
+            if (t == null)
+            {
+                return BadRequest();
+            }
+
+            else
+            {
+                return Ok(t);
+            }
+        }
+
+        [HttpPost("CreateBooking")]
+        public IActionResult CreateBooking(BookingDto dto)
+        {
+            Booking b = _UserService.CreateBooking(dto);
+            if (b == null)
+            {
+                return BadRequest();
+            }
+            else
+            {
+                return Created("yay", b);
+            }
+        }
+
+        [HttpGet("GetUsersBookings")]
+        public IActionResult GetUsersBookings(int userId)
+        {
+            List<Booking> b = _UserService.GetUsersBookings(userId);
+            if (b == null)
+            {
+                return BadRequest();
+            }
+            else
+            {
+                return Ok(b);
+            }
+        }
+
+        [HttpPost("CreateTrainer")]
+        public IActionResult CreateTrainer(TrainerDto dto)
+        {
+            Trainer t = _UserService.CreateTrainer(dto);
+            if (t == null)
+            {
+                return BadRequest();
+            }
+            else
+            {
+                return Created("Tjoho", t);
+            }
+        }
 
 
-
-            //// GET: api/User
-            //[HttpGet]
-            //public IEnumerable<string> Get()
-            //{
-            //    return new string[] { "value1", "value2" };
-            //}
-
-            //// GET: api/User/5
-            //[HttpGet("{id}", Name = "Get")]
-            //public string Get(int id)
-            //{
-            //    return "value";
-            //}
-
-            //// POST: api/User
-            //[HttpPost]
-            //public void Post([FromBody] string value)
-            //{
-            //}
-
-            //// PUT: api/User/5
-            //[HttpPut("{id}")]
-            //public void Put(int id, [FromBody] string value)
-            //{
-            //}
-
-            //// DELETE: api/ApiWithActions/5
-            //[HttpDelete("{id}")]
-            //public void Delete(int id)
-            //{
-            //}
+        [HttpDelete("DeleteUser")]
+        public IActionResult DeleteUser(int UserId)
+        {
+            User U = _UserService.DeleteUser(UserId);
+            if (U == null)
+            {
+                return BadRequest();
+            }
+            else
+            {
+                return Ok(U);
+            }
         }
     }
+}

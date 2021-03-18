@@ -1,17 +1,17 @@
-﻿using GymBookingSystem.Models;
-using GymBookingSystem.Models.DTO;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using GymBookingSystem.Models;
+using GymBookingSystem.Models.DTO;
 
 namespace GymBookingSystem.Services
 {
-    public class UserService : IUserService
+    public class AdminService
     {
         private readonly GymContext _context;
 
-        public UserService(GymContext context)
+        public AdminService(GymContext context)
         {
             _context = context;
         }
@@ -41,19 +41,19 @@ namespace GymBookingSystem.Services
 
 
         public User Login(string username, string password)
-        {         
-           LoginCredentials lc = _context.LoginCredentials.Where(x => x.Username == username && x.Password == password).FirstOrDefault();
-           
+        {
+            LoginCredentials lc = _context.LoginCredentials.Where(x => x.Username == username && x.Password == password).FirstOrDefault();
+
             if (lc != null)
                 return _context.Users.Where(x => x.UserId == lc.UserId).FirstOrDefault();
-           else
+            else
                 return null;
         }
 
         public string ChangePassword(int userId, string newPassword, string oldPassword)
         {
             LoginCredentials lc = _context.LoginCredentials.Where(x => x.UserId == userId && x.Password == oldPassword).FirstOrDefault();
-            
+
             if (lc != null)
             {
                 lc.Password = newPassword;
@@ -85,7 +85,7 @@ namespace GymBookingSystem.Services
             _context.SaveChanges();
 
             return G;
-        
+
         }
 
 
@@ -93,14 +93,14 @@ namespace GymBookingSystem.Services
         {
             TrainingClass tc = new TrainingClass()
             {
-                    //TrainingClassId = dto.TrainingClassId,
-                    GymId = dto.GymId,
-                    Name = dto.Name,
-                    TrainerId = dto.TrainerId,
-                    MaxPeople = dto.MaxPeople,
-                    Description = dto.Description,
-                    Start = dto.Start,
-                    End = dto.End
+                //TrainingClassId = dto.TrainingClassId,
+                GymId = dto.GymId,
+                Name = dto.Name,
+                TrainerId = dto.TrainerId,
+                MaxPeople = dto.MaxPeople,
+                Description = dto.Description,
+                Start = dto.Start,
+                End = dto.End
             };
 
             _context.TrainingClasses.Add(tc);
@@ -112,8 +112,8 @@ namespace GymBookingSystem.Services
         public TrainingClass GetTrainingClass(int Id)
         {
             var t = _context.TrainingClasses.Where(x => x.TrainingClassId == Id).FirstOrDefault();
-            
-            if (t!=null)
+
+            if (t != null)
             {
                 return t;
             }
@@ -127,7 +127,7 @@ namespace GymBookingSystem.Services
 
         public List<TrainingClass> GetTrainingClasses()
         {
-            List < TrainingClass > t = _context.TrainingClasses.ToList();
+            List<TrainingClass> t = _context.TrainingClasses.ToList();
 
             if (t != null)
             {
@@ -247,52 +247,5 @@ namespace GymBookingSystem.Services
 
             return U;
         }
-
-        //public string ChangeClass(int trainingclassid, string changegymid, string changetrainerid, string changemaxpeople, string changedescription, string changedatetime_start, string changedatetime_end)
-        //{
-        //    TrainingClass tc = _context.TrainingClasses.Where(x => x.TrainingClassId == trainingclassid && x.GymId == changegymid == && x.TrainerId == changetrainerid == && x.Maxpeople
-        //            == changemaxpeople && x.Description == changedescription && x.DateTime_Start == changedatetime_start && x.DateTime_End == changedatetime_end).FirstOrDefault();
-
-        //    if (tc != null)
-        //    {
-        //        //tc.TrainingClassId = newTrainingClassId;
-        //        tc.GymId = changeGymId;
-        //        tc.TrainerId = changeTrainerId;
-        //        tc.Maxpeople = changeMaxPeople;
-        //        tc.Description = changeDescription;
-        //        tc.DateTime_Start = changeDateTime_Start;
-        //        tc.DateTime_End = changeDateTime_End;
-        //        //lc.Password = newPassword;
-        //        _context.Update(tc);
-        //        _context.SaveChanges();
-        //        return "Class changed successfully";
-        //    }
-        //    else
-        //    {
-        //        return "Failed to change class ";
-        //    }
-        //}
-
-
-
-
-        /*public TrainingClass CreateTrainingClass(TrainingClass dto)
-        {
-            TrainingClass TC = new TrainingClass()
-            {
-            TrainingClassId = dto.TrainingClassId,
-            GymId = dto.GymId,
-            TrainerId = dto.TrainerId,
-            Maxpeople = dto.MaxPeople,
-            Description = dto.Description,
-            DateTime Start = dto.DateTime Start,
-            DateTime End = dto.DateTime End
-            };
-
-            _context.Gyms.Add(TC);
-            _context.SaveChanges();
-
-            return TC;*/
     }
 }
-

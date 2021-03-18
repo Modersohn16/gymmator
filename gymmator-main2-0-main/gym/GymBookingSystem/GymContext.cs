@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore;
 using GymBookingSystem.Models;
 using Microsoft.EntityFrameworkCore;
+using GymBookingSystem.Models.DTO;
 
 namespace GymBookingSystem
 {
@@ -16,5 +17,7 @@ namespace GymBookingSystem
         public DbSet<LoginCredentials> LoginCredentials { get; set; }
         public DbSet<TrainingClass> TrainingClasses { get; set; }
         public GymContext(DbContextOptions<GymContext> options) : base(options) { }
+
+        public DbSet<Trainer> Trainers { get; set; }
     }
 }

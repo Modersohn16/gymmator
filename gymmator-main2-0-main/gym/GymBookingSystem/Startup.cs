@@ -43,22 +43,51 @@ namespace GymBookingSystem
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
-            services.AddCors(options =>
+            services.AddCors(o => o.AddPolicy("MyPolicy", builder =>
             {
-                options.AddPolicy(name: MyAllowSpecificOrigins,
-                                  builder =>
-                                  {
-                                      builder.WithOrigins("https://localhost:44391",
-                                                          "https://Platypus.azurewebsites.net");
-                                  });
-            });
+                builder.AllowAnyOrigin()
+                       .AllowAnyMethod()
+                       .AllowAnyHeader();
+            }));
+
+            //services.AddCors(options =>
+            //{
+            //    options.AddPolicy(name: MyAllowSpecificOrigins,
+            //                      builder =>
+            //                      {
+            //                          builder.WithOrigins("https://localhost:3000").AllowAnyMethod().AllowAnyHeader();
+            //                      });
+            //});
+
+            //services.AddCors(options =>
+            //{
+            //    // this defines a CORS policy called "default"
+            //    options.AddPolicy("default", policy =>
+            //    {
+            //        policy.WithOrigins("https://localhost:44364").AllowAnyOrigin()
+            //            .AllowAnyHeader()
+            //            .AllowAnyMethod();
+            //    });
+
+                //options.AddPolicy(name: MyAllowSpecificOrigins,
+                //                  builder =>
+                //                  {
+                //                      builder.WithOrigins("https://localhost:3000").AllowAnyMethod().AllowAnyHeader();
+                //                  });
+
+                //options.AddPolicy(name: MyAllowSpecificOrigins,
+                //  builder =>
+                //  {
+                //      builder.WithOrigins("https://localhost:44364").AllowAnyMethod().AllowAnyHeader();
+                //  });
+
+            //});
             //services.AddControllers();
             services.AddSwaggerGen();
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
             services.AddDbContext<GymContext>(options =>
             options.UseSqlServer(Configuration.GetConnectionString("GymConnectionString")));
-            //bläää
             services.AddScoped<GymContext>();
             services.AddScoped<IUserService, UserService>();
             services.AddMvc(option => option.EnableEndpointRouting = false);
@@ -79,10 +108,12 @@ namespace GymBookingSystem
                 app.UseHsts();
             }
 
-            app.UseCors(MyAllowSpecificOrigins);
+            
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();
+            app.UseCors("MyPolicy");
+            //app.UseCors(MyAllowSpecificOrigins);
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {

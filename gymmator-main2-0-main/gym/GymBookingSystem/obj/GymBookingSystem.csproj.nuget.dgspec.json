@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "E:\\programmerings projekt\\gym system with Danne\\gymmator-main2-0-main\\gym\\GymBookingSystem\\GymBookingSystem.csproj": {}
+    "E:\\programmerings projekt\\gymmator-main2-0\\gym\\GymBookingSystem\\GymBookingSystem.csproj": {}
   },
   "projects": {
-    "E:\\programmerings projekt\\gym system with Danne\\gymmator-main2-0-main\\gym\\GymBookingSystem\\GymBookingSystem.csproj": {
+    "E:\\programmerings projekt\\gymmator-main2-0\\gym\\GymBookingSystem\\GymBookingSystem.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "E:\\programmerings projekt\\gym system with Danne\\gymmator-main2-0-main\\gym\\GymBookingSystem\\GymBookingSystem.csproj",
+        "projectUniqueName": "E:\\programmerings projekt\\gymmator-main2-0\\gym\\GymBookingSystem\\GymBookingSystem.csproj",
         "projectName": "GymBookingSystem",
-        "projectPath": "E:\\programmerings projekt\\gym system with Danne\\gymmator-main2-0-main\\gym\\GymBookingSystem\\GymBookingSystem.csproj",
+        "projectPath": "E:\\programmerings projekt\\gymmator-main2-0\\gym\\GymBookingSystem\\GymBookingSystem.csproj",
         "packagesPath": "C:\\Users\\Ines\\.nuget\\packages\\",
-        "outputPath": "E:\\programmerings projekt\\gym system with Danne\\gymmator-main2-0-main\\gym\\GymBookingSystem\\obj\\",
+        "outputPath": "E:\\programmerings projekt\\gymmator-main2-0\\gym\\GymBookingSystem\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
@@ -43,6 +43,10 @@
         "net5.0": {
           "targetAlias": "net5.0",
           "dependencies": {
+            "Microsoft.AspNet.WebApi.Cors": {
+              "target": "Package",
+              "version": "[5.2.7, )"
+            },
             "Microsoft.EntityFrameworkCore": {
               "target": "Package",
               "version": "[5.0.1, )"
@@ -58,6 +62,12 @@
               "version": "[5.0.1, )"
             },
             "Microsoft.EntityFrameworkCore.Sqlite": {
+              "target": "Package",
+              "version": "[5.0.1, )"
+            },
+            "Microsoft.EntityFrameworkCore.Tools": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
               "target": "Package",
               "version": "[5.0.1, )"
             },
