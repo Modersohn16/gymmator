@@ -1,10 +1,16 @@
 {
   "ExpandedNodes": [
     "",
-    "\\gymmator-main2-0-main",
-    "\\gymmator-main2-0-main\\gym",
-    "\\gymmator-main2-0-main\\gym\\GymBookingSystem"
+    "\\gym",
+    "\\gym\\GymBookingSystem",
+    "\\gym\\GymBookingSystem\\obj",
+    "\\gym\\GymBookingSystem\\Properties",
+    "\\gym\\GymBookingSystem\\Views\\Home",
+    "\\gym\\GymBookingSystem\\Views\\Shared",
+    "\\gym\\GymBookingSystem\\wwwroot\\css",
+    "\\gym\\GymBookingSystem\\wwwroot\\js",
+    "\\gym\\GymBookingSystem\\wwwroot\\lib"
   ],
-  "SelectedNode": "\\gymmator-main2-0-main\\gym\\GymBookingSystem",
+  "SelectedNode": "\\gym\\GymBookingSystem\\GymBookingSystem.sln",
   "PreviewInSolutionExplorer": false
 }
