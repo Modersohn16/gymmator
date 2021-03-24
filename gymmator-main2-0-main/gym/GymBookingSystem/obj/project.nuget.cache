@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "QPlBMhYKgxAZkpcH1jUW0eb8WnFpRVq7nYeKPYQq1tdqG4oLo0WN3IzFCF3cDx9asw+8yuHhACy2CI3guuIoRg==",
+  "dgSpecHash": "nqp+LrP6l9plSOeu3aGA0qRG9VHb3138oY+k3Q49XbHV83tvK3lurEREuIXraRpQzaxqkr55i6nFlLM/lBN2tw==",
   "success": true,
-  "projectFilePath": "E:\\programmerings projekt\\gymmator-main2-0\\gym\\GymBookingSystem\\GymBookingSystem.csproj",
+  "projectFilePath": "C:\\Users\\Ines\\Documents\\GitHub\\gymmator\\gymmator-main2-0-main\\gym\\GymBookingSystem\\GymBookingSystem.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Ines\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
     "C:\\Users\\Ines\\.nuget\\packages\\microsoft.aspnet.cors\\5.2.7\\microsoft.aspnet.cors.5.2.7.nupkg.sha512",

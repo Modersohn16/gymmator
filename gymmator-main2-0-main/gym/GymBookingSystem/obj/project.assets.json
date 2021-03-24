@@ -9264,11 +9264,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "E:\\programmerings projekt\\gymmator-main2-0\\gym\\GymBookingSystem\\GymBookingSystem.csproj",
+      "projectUniqueName": "C:\\Users\\Ines\\Documents\\GitHub\\gymmator\\gymmator-main2-0-main\\gym\\GymBookingSystem\\GymBookingSystem.csproj",
       "projectName": "GymBookingSystem",
-      "projectPath": "E:\\programmerings projekt\\gymmator-main2-0\\gym\\GymBookingSystem\\GymBookingSystem.csproj",
+      "projectPath": "C:\\Users\\Ines\\Documents\\GitHub\\gymmator\\gymmator-main2-0-main\\gym\\GymBookingSystem\\GymBookingSystem.csproj",
       "packagesPath": "C:\\Users\\Ines\\.nuget\\packages\\",
-      "outputPath": "E:\\programmerings projekt\\gymmator-main2-0\\gym\\GymBookingSystem\\obj\\",
+      "outputPath": "C:\\Users\\Ines\\Documents\\GitHub\\gymmator\\gymmator-main2-0-main\\gym\\GymBookingSystem\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
