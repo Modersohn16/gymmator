@@ -18,6 +18,7 @@ namespace GymBookingSystem.Services
         TrainingClass GetTrainingClass(int Id);
         List<TrainingClass> GetTrainingClasses();
         List<TrainingClass> GetTrainingClassesAtGym(int GymId);
+        List<TrainingClass> GetTrainingClassesAtDate(int year, int month, int day);
         User DeleteUser(int UserId);
         Booking CreateBooking(BookingDto dto);
         List<Booking> GetUsersBookings(int userId);

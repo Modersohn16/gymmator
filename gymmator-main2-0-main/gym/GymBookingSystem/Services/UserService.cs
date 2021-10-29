@@ -188,6 +188,24 @@ namespace GymBookingSystem.Services
 
         }
 
+
+        public List<TrainingClass> GetTrainingClassesAtDate(int year, int month, int day)
+        {
+            DateTime chosenDate = new DateTime(year, month, day);
+            List<TrainingClass> t = _context.TrainingClasses.Where(x => x.Start.Date == chosenDate).ToList();
+
+            if (t != null)
+            {
+                return t;
+            }
+
+            else
+            {
+                return null;
+            }
+
+        }
+
         public Booking CreateBooking(BookingDto dto)
         {
             Booking b = new Booking()

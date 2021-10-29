@@ -49,10 +49,10 @@ namespace GymBookingSystem.Controllers
             }
         }
         
-        [HttpGet("login")]
-        public IActionResult Login(string username, string password) 
+        [HttpPost("login")]
+        public IActionResult Login([FromBody]LoginModel login) 
         {
-            User user = _UserService.Login(username, password);
+            User user = _UserService.Login(login.Username, login.Password);
             if(user == null)
             {
                 return BadRequest();
@@ -111,6 +111,22 @@ namespace GymBookingSystem.Controllers
         public IActionResult GetTrainingClasses()
         {
             List<TrainingClass> t = _UserService.GetTrainingClasses();
+            if (t == null)
+            {
+                return BadRequest();
+            }
+            else
+            {
+                return Ok(t);
+            }
+        }
+
+
+        [HttpGet("GetTrainingClassesAtDate")]
+        public IActionResult GetTrainingClassesAtDate(int year, int month, int day)
+        {
+            
+            List<TrainingClass> t = _UserService.GetTrainingClassesAtDate(year, month, day);
             if (t == null)
             {
                 return BadRequest();
