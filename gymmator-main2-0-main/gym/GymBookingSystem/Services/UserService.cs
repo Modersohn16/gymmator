@@ -1,16 +1,22 @@
 ﻿using GymBookingSystem.Models;
 using GymBookingSystem.Models.DTO;
+using GymBookingSystem.Cryptography;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.IdentityModel.Tokens;
+using System.IdentityModel.Tokens.Jwt;
+using Microsoft.Extensions.Configuration;
 
 namespace GymBookingSystem.Services
 {
     public class UserService : IUserService
     {
         private readonly GymContext _context;
-
+        private readonly string Secret1;
+        private readonly IConfiguration _config;
+        private readonly IHasher _hasher;
         public UserService(GymContext context)
         {
             _context = context;
@@ -32,7 +38,8 @@ namespace GymBookingSystem.Services
 
             lc.UserId = U.UserId;
             lc.Username = dto.Username;
-            lc.Password = dto.Password;
+            string hash = _hasher.CreateHash(dto.Password);
+            lc.PasswordHash = hash;
 
             _context.LoginCredentials.Add(lc);
             _context.SaveChanges();
@@ -42,21 +49,25 @@ namespace GymBookingSystem.Services
 
         public User Login(string username, string password)
         {         
-           LoginCredentials lc = _context.LoginCredentials.Where(x => x.Username == username && x.Password == password).FirstOrDefault();
+           LoginCredentials lc = _context.LoginCredentials.Where(x => x.Username == username && x.PasswordHash == password).FirstOrDefault();
            
             if (lc != null)
                 return _context.Users.Where(x => x.UserId == lc.UserId).FirstOrDefault();
            else
                 return null;
+            /*
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var key = Encoding.ASCII.GetBytes(Secret1);
+            */
         }
 
         public string ChangePassword(int userId, string newPassword, string oldPassword)
         {
-            LoginCredentials lc = _context.LoginCredentials.Where(x => x.UserId == userId && x.Password == oldPassword).FirstOrDefault();
+            LoginCredentials lc = _context.LoginCredentials.Where(x => x.UserId == userId && x.PasswordHash == oldPassword).FirstOrDefault();
             
             if (lc != null)
             {
-                lc.Password = newPassword;
+                lc.PasswordHash = newPassword;
                 _context.Update(lc);
                 _context.SaveChanges();
                 return "Password changed successfully";

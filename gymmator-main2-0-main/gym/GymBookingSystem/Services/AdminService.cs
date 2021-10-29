@@ -32,7 +32,7 @@ namespace GymBookingSystem.Services
 
             lc.UserId = U.UserId;
             lc.Username = dto.Username;
-            lc.Password = dto.Password;
+            lc.PasswordHash = dto.Password;
 
             _context.LoginCredentials.Add(lc);
             _context.SaveChanges();
@@ -42,7 +42,7 @@ namespace GymBookingSystem.Services
 
         public User Login(string username, string password)
         {
-            LoginCredentials lc = _context.LoginCredentials.Where(x => x.Username == username && x.Password == password).FirstOrDefault();
+            LoginCredentials lc = _context.LoginCredentials.Where(x => x.Username == username && x.PasswordHash == password).FirstOrDefault();
 
             if (lc != null)
                 return _context.Users.Where(x => x.UserId == lc.UserId).FirstOrDefault();
@@ -52,11 +52,11 @@ namespace GymBookingSystem.Services
 
         public string ChangePassword(int userId, string newPassword, string oldPassword)
         {
-            LoginCredentials lc = _context.LoginCredentials.Where(x => x.UserId == userId && x.Password == oldPassword).FirstOrDefault();
+            LoginCredentials lc = _context.LoginCredentials.Where(x => x.UserId == userId && x.PasswordHash == oldPassword).FirstOrDefault();
 
             if (lc != null)
             {
-                lc.Password = newPassword;
+                lc.PasswordHash = newPassword;
                 _context.Update(lc);
                 _context.SaveChanges();
                 return "Password changed successfully";
