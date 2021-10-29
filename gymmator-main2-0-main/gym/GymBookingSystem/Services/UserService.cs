@@ -17,9 +17,10 @@ namespace GymBookingSystem.Services
         private readonly string Secret1;
         private readonly IConfiguration _config;
         private readonly IHasher _hasher;
-        public UserService(GymContext context)
+        public UserService(GymContext context, IHasher hasher)
         {
             _context = context;
+            _hasher = hasher;
         }
 
         public User CreateUser(UserDto dto)

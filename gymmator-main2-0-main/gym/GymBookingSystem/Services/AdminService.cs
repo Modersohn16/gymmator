@@ -7,7 +7,7 @@ using GymBookingSystem.Models.DTO;
 
 namespace GymBookingSystem.Services
 {
-    public class AdminService
+    public class AdminService : IAdminService
     {
         private readonly GymContext _context;
 

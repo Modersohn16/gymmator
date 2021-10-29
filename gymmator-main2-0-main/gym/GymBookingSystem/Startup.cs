@@ -11,6 +11,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
 using GymBookingSystem.Services;
+using GymBookingSystem.Cryptography;
 
 namespace GymBookingSystem
 {
@@ -23,10 +24,10 @@ namespace GymBookingSystem
         {
             Configuration = configuration;
             var builder = new ConfigurationBuilder()
-.SetBasePath(env.ContentRootPath)
-.AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
-.AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
-.AddEnvironmentVariables();
+            .SetBasePath(env.ContentRootPath)
+            .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+            .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
+            .AddEnvironmentVariables();
             this.Configuration = builder.Build();
 
         }
@@ -85,11 +86,12 @@ namespace GymBookingSystem
             //services.AddControllers();
             services.AddSwaggerGen();
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-
+            services.AddScoped<IHasher, Hasher>();
             services.AddDbContext<GymContext>(options =>
             options.UseSqlServer(Configuration.GetConnectionString("GymConnectionString")));
             services.AddScoped<GymContext>();
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IAdminService, AdminService>();
             services.AddMvc(option => option.EnableEndpointRouting = false);
 
         }
