@@ -50,16 +50,62 @@ namespace GymBookingSystem.Services
 
         public User Login(string username, string password)
         {         
-           LoginCredentials lc = _context.LoginCredentials.Where(x => x.Username == username && x.PasswordHash == password).FirstOrDefault();
-           
-            if (lc != null)
-                return _context.Users.Where(x => x.UserId == lc.UserId).FirstOrDefault();
-           else
+           LoginCredentials lc = _context.LoginCredentials.Where(x => x.Username == username).FirstOrDefault();
+
+            if (lc == null)
+            {
                 return null;
+            }
+
+            if (!AllowedToLogin(lc))
+            {
+                UpdateLoginAttempts(lc);
+                return null;
+            }
+
+            if (!_hasher.ValidatePassword(password, lc.PasswordHash))
+            {
+                UpdateLoginAttempts(lc);
+                return null;
+            }
+
+            User u =  _context.Users.Where(x => x.UserId == lc.UserId).FirstOrDefault();
+            ResetLoginAttempts(lc);
+            return u;
+
             /*
             var tokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.ASCII.GetBytes(Secret1);
             */
+        }
+
+        private bool AllowedToLogin(LoginCredentials lc)
+        {
+            if (lc.Attempts >= 5)
+            {
+                if (lc.LastAttempt.AddMinutes(15) < DateTime.UtcNow)
+                    return true;
+                else
+                    return false;
+            }
+            else
+                return true;
+        }
+
+        private void UpdateLoginAttempts(LoginCredentials lc)
+        {
+
+                DateTime dt = new DateTime(DateTime.UtcNow.Ticks, DateTimeKind.Utc);
+                lc.Attempts++;
+                lc.LastAttempt = dt;
+                 _context.SaveChanges();
+        }
+
+        private void ResetLoginAttempts(LoginCredentials lc)
+        {
+            lc.Attempts = 0;
+            _context.SaveChanges();
+
         }
 
         public string ChangePassword(int userId, string newPassword, string oldPassword)
