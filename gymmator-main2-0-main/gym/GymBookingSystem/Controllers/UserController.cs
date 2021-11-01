@@ -8,6 +8,8 @@ using GymBookingSystem.Services;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
+
 
 namespace GymBookingSystem.Controllers
 {
@@ -21,6 +23,7 @@ namespace GymBookingSystem.Controllers
             _UserService = UserService;
         }
 
+
         [HttpPost("CreateUser")]
         public IActionResult CreateUser(UserDto dto)
         {
@@ -31,23 +34,10 @@ namespace GymBookingSystem.Controllers
             }
             else
             {
-                return Created("yay", u);
+                return Created("User created successfully.", u);
             }
         }
-
-        [HttpPost("CreateGym")]
-        public IActionResult CreateGym(GymDto dto)
-        {
-            Gym g = _UserService.CreateGym(dto);
-            if (g == null)
-            {
-                return BadRequest();
-            }
-            else
-            {
-                return Created("yay", g);
-            }
-        }
+    
         
         [HttpPost("login")]
         public IActionResult Login([FromBody]LoginModel login) 
@@ -61,9 +51,9 @@ namespace GymBookingSystem.Controllers
             {
                 return Ok(user);
             }
-
         }
 
+        [Authorize]
         [HttpPost("ChangePassword")]
         public IActionResult ChangePassword(int userId, string newPassword, string oldPassword)
         {
@@ -77,20 +67,6 @@ namespace GymBookingSystem.Controllers
                 return BadRequest();
             }
 
-        }
-
-        [HttpPost("CreateTrainingClass")]
-        public IActionResult CreateTrainingClass(TrainingClassDto dto)
-        {
-            TrainingClass t = _UserService.CreateTrainingClass(dto);
-            if (t == null)
-            {
-                return BadRequest();
-            }
-            else
-            {
-                return Created("yay", t);
-            }
         }
 
         [HttpGet("GetTrainingClass")]
@@ -164,6 +140,7 @@ namespace GymBookingSystem.Controllers
             }
         }
 
+        [Authorize]
         [HttpPost("CreateBooking")]
         public IActionResult CreateBooking(BookingDto dto)
         {
@@ -178,6 +155,7 @@ namespace GymBookingSystem.Controllers
             }
         }
 
+        [Authorize]
         [HttpGet("GetUsersBookings")]
         public IActionResult GetUsersBookings(int userId)
         {
@@ -192,21 +170,7 @@ namespace GymBookingSystem.Controllers
             }
         }
 
-        [HttpPost("CreateTrainer")]
-        public IActionResult CreateTrainer(TrainerDto dto)
-        {
-            Trainer t = _UserService.CreateTrainer(dto);
-            if (t == null)
-            {
-                return BadRequest();
-            }
-            else
-            {
-                return Created("Tjoho", t);
-            }
-        }
-
-
+        [Authorize]
         [HttpDelete("DeleteUser")]
         public IActionResult DeleteUser(int UserId)
         {

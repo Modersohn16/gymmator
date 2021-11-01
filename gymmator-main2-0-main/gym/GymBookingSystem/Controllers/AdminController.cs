@@ -29,7 +29,7 @@ namespace GymBookingSystem.Controllers
             }
             else
             {
-                return Created("yay", u);
+                return Created("User created successfully.", u);
             }
         }
 
@@ -43,7 +43,7 @@ namespace GymBookingSystem.Controllers
             }
             else
             {
-                return Created("yay", g);
+                return Created("Gym created successfully.", g);
             }
         }
 
@@ -57,7 +57,7 @@ namespace GymBookingSystem.Controllers
             }
             else
             {
-                return Created("yay", t);
+                return Created("Training class created successfully.", t);
             }
         }
 
@@ -86,7 +86,7 @@ namespace GymBookingSystem.Controllers
             }
             else
             {
-                return Created("Tjoho", t);
+                return Created("Trainer created successfully.", t);
             }
         }
 

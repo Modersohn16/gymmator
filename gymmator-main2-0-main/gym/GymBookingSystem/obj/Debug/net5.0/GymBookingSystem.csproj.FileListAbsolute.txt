@@ -521,3 +521,4 @@ C:\Users\Ines\Documents\GitHub\gymmator\gymmator-main2-0-main\gym\GymBookingSyst
 C:\Users\Ines\Documents\GitHub\gymmator\gymmator-main2-0-main\gym\GymBookingSystem\obj\Debug\net5.0\ref\GymBookingSystem.dll
 C:\Users\Ines\Documents\GitHub\gymmator\gymmator-main2-0-main\gym\GymBookingSystem\obj\Debug\net5.0\GymBookingSystem.pdb
 C:\Users\Ines\Documents\GitHub\gymmator\gymmator-main2-0-main\gym\GymBookingSystem\obj\Debug\net5.0\GymBookingSystem.genruntimeconfig.cache
+C:\Users\Ines\Documents\GitHub\gymmator\gymmator-main2-0-main\gym\GymBookingSystem\bin\Debug\net5.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll

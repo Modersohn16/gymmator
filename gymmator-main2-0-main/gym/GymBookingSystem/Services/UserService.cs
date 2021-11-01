@@ -8,6 +8,8 @@ using System.Threading.Tasks;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using Microsoft.Extensions.Configuration;
+using System.Security.Claims;
+using System.Text;
 
 namespace GymBookingSystem.Services
 {
@@ -17,10 +19,12 @@ namespace GymBookingSystem.Services
         private readonly string Secret1;
         private readonly IConfiguration _config;
         private readonly IHasher _hasher;
-        public UserService(GymContext context, IHasher hasher)
+        public UserService(GymContext context, IHasher hasher, IConfiguration config)
         {
+            _config = config;
             _context = context;
             _hasher = hasher;
+            Secret1 = _config.GetConnectionString("Secret1");
         }
 
         public User CreateUser(UserDto dto)
@@ -69,14 +73,25 @@ namespace GymBookingSystem.Services
                 return null;
             }
 
-            User u =  _context.Users.Where(x => x.UserId == lc.UserId).FirstOrDefault();
-            ResetLoginAttempts(lc);
-            return u;
+            User u = _context.Users.Where(x => x.UserId == lc.UserId).FirstOrDefault();
 
-            /*
             var tokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.ASCII.GetBytes(Secret1);
-            */
+            var tokenDescriptor = new SecurityTokenDescriptor
+            {
+                Subject = new ClaimsIdentity(new Claim[]
+                {
+                    new Claim(ClaimTypes.Name, u.UserId.ToString()),
+                }),
+                Expires = DateTime.UtcNow.AddHours(12),
+                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
+            };
+
+            var token = tokenHandler.CreateToken(tokenDescriptor);
+            u.Token = tokenHandler.WriteToken(token);
+
+            ResetLoginAttempts(lc);
+            return u;
         }
 
         private bool AllowedToLogin(LoginCredentials lc)
@@ -124,48 +139,6 @@ namespace GymBookingSystem.Services
                 return "Failed to change password ";
             }
         }
-
-        public Gym CreateGym(GymDto dto)
-        {
-            Gym G = new Gym()
-            {
-                Name = dto.Name,
-                StreetAdress = dto.StreetAdress,
-                PostalCode = dto.PostalCode,
-                City = dto.City,
-                OperationalHours = dto.OperationalHours,
-                MaxPeople = dto.MaxPeople,
-                Email = dto.Email,
-                PhoneNumber = dto.PhoneNumber
-            };
-
-            _context.Gyms.Add(G);
-            _context.SaveChanges();
-
-            return G;
-        
-        }
-
-
-        public TrainingClass CreateTrainingClass(TrainingClassDto dto)
-        {
-            TrainingClass tc = new TrainingClass()
-            {
-                    //TrainingClassId = dto.TrainingClassId,
-                    GymId = dto.GymId,
-                    Name = dto.Name,
-                    TrainerId = dto.TrainerId,
-                    MaxPeople = dto.MaxPeople,
-                    Description = dto.Description,
-                    Start = dto.Start,
-                    End = dto.End
-            };
-
-            _context.TrainingClasses.Add(tc);
-            _context.SaveChanges();
-            return tc;
-        }
-
 
         public TrainingClass GetTrainingClass(int Id)
         {
@@ -295,20 +268,6 @@ namespace GymBookingSystem.Services
             }
         }
 
-        public Trainer CreateTrainer(TrainerDto dto)
-        {
-            Trainer t = new Trainer()
-            {
-
-                FirstName = dto.FirstName,
-                LastName = dto.LastName,
-                Email = dto.Email
-            };
-            _context.Trainers.Add(t);
-            _context.SaveChanges();
-            return t;
-
-        }
 
         public User DeleteUser(int UserId)
         {
@@ -324,51 +283,6 @@ namespace GymBookingSystem.Services
             return U;
         }
 
-        //public string ChangeClass(int trainingclassid, string changegymid, string changetrainerid, string changemaxpeople, string changedescription, string changedatetime_start, string changedatetime_end)
-        //{
-        //    TrainingClass tc = _context.TrainingClasses.Where(x => x.TrainingClassId == trainingclassid && x.GymId == changegymid == && x.TrainerId == changetrainerid == && x.Maxpeople
-        //            == changemaxpeople && x.Description == changedescription && x.DateTime_Start == changedatetime_start && x.DateTime_End == changedatetime_end).FirstOrDefault();
-
-        //    if (tc != null)
-        //    {
-        //        //tc.TrainingClassId = newTrainingClassId;
-        //        tc.GymId = changeGymId;
-        //        tc.TrainerId = changeTrainerId;
-        //        tc.Maxpeople = changeMaxPeople;
-        //        tc.Description = changeDescription;
-        //        tc.DateTime_Start = changeDateTime_Start;
-        //        tc.DateTime_End = changeDateTime_End;
-        //        //lc.Password = newPassword;
-        //        _context.Update(tc);
-        //        _context.SaveChanges();
-        //        return "Class changed successfully";
-        //    }
-        //    else
-        //    {
-        //        return "Failed to change class ";
-        //    }
-        //}
-
-
-
-
-        /*public TrainingClass CreateTrainingClass(TrainingClass dto)
-        {
-            TrainingClass TC = new TrainingClass()
-            {
-            TrainingClassId = dto.TrainingClassId,
-            GymId = dto.GymId,
-            TrainerId = dto.TrainerId,
-            Maxpeople = dto.MaxPeople,
-            Description = dto.Description,
-            DateTime Start = dto.DateTime Start,
-            DateTime End = dto.DateTime End
-            };
-
-            _context.Gyms.Add(TC);
-            _context.SaveChanges();
-
-            return TC;*/
     }
 }
 

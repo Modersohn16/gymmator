@@ -12,6 +12,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
 using GymBookingSystem.Services;
 using GymBookingSystem.Cryptography;
+using System.Text;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 namespace GymBookingSystem
 {
@@ -94,6 +97,24 @@ namespace GymBookingSystem
             services.AddScoped<IAdminService, AdminService>();
             services.AddMvc(option => option.EnableEndpointRouting = false);
 
+            var key = Encoding.ASCII.GetBytes(Configuration.GetConnectionString("Secret1"));
+            services.AddAuthentication(x =>
+            {
+                x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+            .AddJwtBearer(x =>
+            {
+                x.RequireHttpsMetadata = false;
+                x.SaveToken = true;
+                x.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(key),
+                    ValidateIssuer = false,
+                    ValidateAudience = false
+                };
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
