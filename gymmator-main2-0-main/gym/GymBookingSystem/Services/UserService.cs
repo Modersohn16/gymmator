@@ -19,6 +19,7 @@ namespace GymBookingSystem.Services
         private readonly string Secret1;
         private readonly IConfiguration _config;
         private readonly IHasher _hasher;
+
         public UserService(GymContext context, IHasher hasher, IConfiguration config)
         {
             _config = config;
@@ -29,12 +30,15 @@ namespace GymBookingSystem.Services
 
         public User CreateUser(UserDto dto)
         {
+            var userRole = _context.Roles.Where(x => x.Title == "User").FirstOrDefault();
+
             User U = new User()
             {
                 FirstName = dto.FirstName,
                 LastName = dto.LastName,
                 Email = dto.Email,
-                Admin = dto.Admin
+                Role = userRole,
+                RoleId = userRole.Id
             };
 
             LoginCredentials lc = new LoginCredentials();
@@ -74,6 +78,11 @@ namespace GymBookingSystem.Services
             }
 
             User u = _context.Users.Where(x => x.UserId == lc.UserId).FirstOrDefault();
+            Role r = _context.Roles.Where(x => x.Id == u.RoleId).FirstOrDefault();
+
+            u.Role = new Role();
+            u.Role.Id = r.Id;
+            u.Role.Title = r.Title;
 
             var tokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.ASCII.GetBytes(Secret1);
@@ -82,7 +91,8 @@ namespace GymBookingSystem.Services
                 Subject = new ClaimsIdentity(new Claim[]
                 {
                     new Claim(ClaimTypes.Name, u.UserId.ToString()),
-                }),
+                    new Claim(ClaimTypes.Role, r.Title)
+        }),
                 Expires = DateTime.UtcNow.AddHours(12),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
             };
@@ -125,19 +135,23 @@ namespace GymBookingSystem.Services
 
         public string ChangePassword(int userId, string newPassword, string oldPassword)
         {
-            LoginCredentials lc = _context.LoginCredentials.Where(x => x.UserId == userId && x.PasswordHash == oldPassword).FirstOrDefault();
-            
-            if (lc != null)
-            {
-                lc.PasswordHash = newPassword;
-                _context.Update(lc);
-                _context.SaveChanges();
-                return "Password changed successfully";
-            }
-            else
+            LoginCredentials lc = _context.LoginCredentials.Where(x => x.UserId == userId).FirstOrDefault();
+
+            if(lc == null)
             {
                 return "Failed to change password ";
             }
+
+            if (!_hasher.ValidatePassword(oldPassword, lc.PasswordHash))
+            {
+                return "Incorrect old password";
+            }
+
+            var hash = _hasher.CreateHash(newPassword);
+            lc.PasswordHash = hash;
+            _context.Update(lc);
+            _context.SaveChanges();
+            return "Password changed successfully";
         }
 
         public TrainingClass GetTrainingClass(int Id)

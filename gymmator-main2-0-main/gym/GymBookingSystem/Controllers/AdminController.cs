@@ -6,6 +6,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
+
 
 namespace GymBookingSystem.Controllers
 {
@@ -33,6 +35,7 @@ namespace GymBookingSystem.Controllers
             }
         }
 
+        [Authorize(Roles = Role.Admin)]
         [HttpPost("CreateGym")]
         public IActionResult CreateGym(GymDto dto)
         {
@@ -47,6 +50,7 @@ namespace GymBookingSystem.Controllers
             }
         }
 
+        [Authorize(Roles = Role.Admin)]
         [HttpPost("CreateTrainingClass")]
         public IActionResult CreateTrainingClass(TrainingClassDto dto)
         {
@@ -76,6 +80,7 @@ namespace GymBookingSystem.Controllers
             }
         }
 
+        [Authorize(Roles = Role.Admin)]
         [HttpPost("CreateTrainer")]
         public IActionResult CreateTrainer(TrainerDto dto)
         {

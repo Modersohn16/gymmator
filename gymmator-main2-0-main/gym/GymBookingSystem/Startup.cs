@@ -21,8 +21,6 @@ namespace GymBookingSystem
     public class Startup
     {
         readonly string MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
-
-
         public Startup(IConfiguration configuration, IHostingEnvironment env)
         {
             Configuration = configuration;
@@ -131,7 +129,7 @@ namespace GymBookingSystem
                 app.UseHsts();
             }
 
-            
+            app.UseAuthentication();
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();

@@ -39,7 +39,7 @@ namespace GymBookingSystem.Controllers
         }
     
         
-        [HttpPost("login")]
+        [HttpPost("Login")]
         public IActionResult Login([FromBody]LoginModel login) 
         {
             User user = _UserService.Login(login.Username, login.Password);
@@ -55,9 +55,9 @@ namespace GymBookingSystem.Controllers
 
         [Authorize]
         [HttpPost("ChangePassword")]
-        public IActionResult ChangePassword(int userId, string newPassword, string oldPassword)
+        public IActionResult ChangePassword([FromBody]ChangePasswordDto dto)
         {
-            string message = _UserService.ChangePassword(userId, newPassword, oldPassword);
+            string message = _UserService.ChangePassword(dto.UserId, dto.NewPassword, dto.OldPassword);
             if(message.Contains("successfully"))
             {
                 return Ok(message);

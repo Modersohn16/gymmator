@@ -4,26 +4,31 @@ using System.Linq;
 using System.Threading.Tasks;
 using GymBookingSystem.Models;
 using GymBookingSystem.Models.DTO;
+using GymBookingSystem.Cryptography;
 
 namespace GymBookingSystem.Services
 {
     public class AdminService : IAdminService
     {
         private readonly GymContext _context;
+        private readonly IHasher _hasher;
 
-        public AdminService(GymContext context)
+        public AdminService(GymContext context, IHasher hasher)
         {
             _context = context;
+            _hasher = hasher;
         }
 
         public User CreateUser(UserDto dto)
         {
+            var role = _context.Roles.Where(x => x.Title == dto.Title).FirstOrDefault();
             User U = new User()
             {
                 FirstName = dto.FirstName,
                 LastName = dto.LastName,
                 Email = dto.Email,
-                Admin = dto.Admin
+                Role = role,
+                RoleId = role.Id
             };
 
             LoginCredentials lc = new LoginCredentials();
@@ -32,7 +37,8 @@ namespace GymBookingSystem.Services
 
             lc.UserId = U.UserId;
             lc.Username = dto.Username;
-            lc.PasswordHash = dto.Password;
+            string hash = _hasher.CreateHash(dto.Password);
+            lc.PasswordHash = hash;
 
             _context.LoginCredentials.Add(lc);
             _context.SaveChanges();
