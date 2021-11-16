@@ -173,5 +173,16 @@ namespace GymBookingSystem.Services
             _context.SaveChanges();
             return t;
         }
+
+        public User ChangeRole(int userId, string title)
+        {
+            User u = _context.Users.Where(x => x.UserId == userId).FirstOrDefault();
+            if (u == null)
+                return null;
+            var userRole = _context.Roles.Where(x => x.Title == title).FirstOrDefault();
+            u.Role = userRole;
+            u.RoleId = userRole.Id;
+            return u;
+        }
     }
 }

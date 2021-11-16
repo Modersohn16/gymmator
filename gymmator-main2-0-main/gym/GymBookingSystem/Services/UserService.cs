@@ -37,6 +37,9 @@ namespace GymBookingSystem.Services
             if (!PasswordFollowsGuidelines(dto.Password))
                 return null;
 
+            if (UsernameExists(dto.Username))
+                return null;
+
             var userRole = _context.Roles.Where(x => x.Title == "User").FirstOrDefault();
 
             User U = new User()
@@ -62,6 +65,14 @@ namespace GymBookingSystem.Services
             return U;
         }
 
+        private bool UsernameExists(string name)
+        {
+            LoginCredentials lc = _context.LoginCredentials.Where(x => x.Username == name).FirstOrDefault();
+            if (lc != null)
+                    return true;
+                else
+                    return false;            
+        }
         /*
          * Password requirements: 8 - 36 characters. At least:
          * 1 capital letter
@@ -265,6 +276,20 @@ namespace GymBookingSystem.Services
             _context.SaveChanges();
 
             return U;
+        }
+        public User UpdateUser(int userId, UpdateUserDto dto)
+        {
+            User u = _context.Users.Where(x => x.UserId == userId).FirstOrDefault();
+            if (u == null)
+                return null;
+
+            u.FirstName = dto.FirstName;
+            u.LastName = dto.LastName;
+            u.Email = dto.Email;
+
+            _context.Update(u);
+            _context.SaveChanges();
+            return u;
         }
 
     }

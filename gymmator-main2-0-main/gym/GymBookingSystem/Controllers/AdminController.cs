@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.Extensions.Logging;
 
 
 namespace GymBookingSystem.Controllers
@@ -16,9 +17,12 @@ namespace GymBookingSystem.Controllers
     public class AdminController : ControllerBase
     {
         private IAdminService _AdminService;
-        public AdminController(IAdminService AdminService)
+        private readonly ILogger<AdminController> _logger;
+
+        public AdminController(IAdminService AdminService, ILogger<AdminController> logger)
         {
             _AdminService = AdminService;
+            _logger = logger;
         }
 
         [HttpPost("CreateUser")]
@@ -107,6 +111,21 @@ namespace GymBookingSystem.Controllers
             else
             {
                 return Ok(t);
+            }
+        }
+
+        [Authorize(Roles = Role.Admin)]
+        [HttpPut("ChangeRole")]
+        public IActionResult ChangeRole(int userId, string title)
+        {
+            User u = _AdminService.ChangeRole(userId, title);
+            if (u == null)
+            {
+                return BadRequest();
+            }
+            else
+            {
+                return Ok(u);
             }
         }
     }

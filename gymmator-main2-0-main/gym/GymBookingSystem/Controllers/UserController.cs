@@ -9,7 +9,8 @@ using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
-
+using Microsoft.Extensions.Logging;
+using Serilog;
 
 namespace GymBookingSystem.Controllers
 {
@@ -17,23 +18,28 @@ namespace GymBookingSystem.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
-        private IUserService _UserService; 
-        public UserController(IUserService UserService)
+        private IUserService _UserService;
+        private readonly ILogger<UserController> _logger;
+        public UserController(IUserService UserService, ILogger<UserController> logger)
         {
             _UserService = UserService;
+            _logger = logger;
         }
 
 
         [HttpPost("CreateUser")]
         public IActionResult CreateUser(UserDto dto)
         {
+            Log.Information("Attempting to create user: " + dto);
             User u = _UserService.CreateUser(dto);
             if (u == null)
             {
+                Log.Warning("Failed to create user" + dto);
                 return BadRequest();
             }
             else
             {
+                Log.Information("User created successfully: " + u);
                 return Created("User created successfully.", u);
             }
         }
@@ -42,13 +48,16 @@ namespace GymBookingSystem.Controllers
         [HttpPost("Login")]
         public IActionResult Login([FromBody]LoginDto dto) 
         {
+            Log.Information("Authenticating user: " + dto.Username);
             User user = _UserService.Login(dto);
             if(user == null)
             {
+                Log.Information("Failed to authenticate user: " + dto.Username);
                 return BadRequest("Invalid username or password");
             }
             else
             {
+                Log.Information("Authenticated user: " + dto.Username);
                 return Ok(user);
             }
         }
@@ -111,6 +120,21 @@ namespace GymBookingSystem.Controllers
             else
             {
                 return Ok(U);
+            }
+        }
+
+        [Authorize]
+        [HttpPut("UpdateUser")]
+        public IActionResult UpdateUser(int userId, UpdateUserDto dto)
+        {
+            User u = _UserService.UpdateUser(userId, dto);
+            if (u == null)
+            {
+                return BadRequest();
+            }
+            else
+            {
+                return Ok(u);
             }
         }
     }

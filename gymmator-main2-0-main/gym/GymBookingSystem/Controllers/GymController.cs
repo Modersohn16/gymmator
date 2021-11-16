@@ -8,6 +8,7 @@ using GymBookingSystem.Models.DTO;
 using GymBookingSystem.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
+using Microsoft.Extensions.Logging;
 
 namespace GymBookingSystem.Controllers
 {
@@ -16,11 +17,12 @@ namespace GymBookingSystem.Controllers
     public class GymController : ControllerBase
     {
         private IGymService _GymService;
+        private readonly ILogger<GymController> _logger;
 
-
-        public GymController(IGymService GymService)
+        public GymController(IGymService GymService, ILogger<GymController> logger)
         {
             _GymService = GymService;
+            _logger = logger;
         }
 
         [Authorize(Roles = Role.Admin)]

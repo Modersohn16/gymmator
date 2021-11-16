@@ -15,7 +15,7 @@ namespace GymBookingSystem.Services
         User DeleteUser(int UserId);
         Booking CreateBooking(BookingDto dto);
         List<Booking> GetUsersBookings(int userId);
-
+        User UpdateUser(int userId, UpdateUserDto dto);
 
 
     }
