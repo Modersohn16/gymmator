@@ -152,12 +152,24 @@ namespace GymBookingSystem.Services
 
             return U;
         }
-        public Trainer DeleteTrainer(int TrainerId)
+        public Trainer DeleteTrainer(int trainerId)
         {
-            Trainer t = _context.Trainers.Where(x => x.TrainerId == TrainerId).FirstOrDefault();
+            Trainer t = _context.Trainers.Where(x => x.TrainerId == trainerId).FirstOrDefault();
             if (t == null)
                 return null;
             _context.Trainers.Remove(t);
+            _context.SaveChanges();
+            return t;
+        }
+        public Trainer UpdateTrainer(int trainerId, TrainerDto dto)
+        {
+            Trainer t = _context.Trainers.Where(x => x.TrainerId == trainerId).FirstOrDefault();
+            if (t == null)
+                return null;
+            t.FirstName = dto.FirstName;
+            t.LastName = dto.LastName;
+            t.Email = dto.Email;
+            _context.Update(t);
             _context.SaveChanges();
             return t;
         }

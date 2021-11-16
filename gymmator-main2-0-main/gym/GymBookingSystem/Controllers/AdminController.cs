@@ -94,5 +94,20 @@ namespace GymBookingSystem.Controllers
                 return Ok(t);
             }
         }
+
+        [Authorize(Roles = Role.Admin)]
+        [HttpPut("UpdateTrainer")]
+        public IActionResult UpdateGym(int trainerId, TrainerDto dto)
+        {
+            Trainer t = _AdminService.UpdateTrainer(trainerId, dto);
+            if (t == null)
+            {
+                return BadRequest();
+            }
+            else
+            {
+                return Ok(t);
+            }
+        }
     }
 }

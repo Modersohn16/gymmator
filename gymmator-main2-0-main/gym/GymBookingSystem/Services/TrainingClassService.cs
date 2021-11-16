@@ -120,6 +120,7 @@ namespace GymBookingSystem.Services
             t.Start = dto.Start;
             t.End = dto.End;
             _context.Update(t);
+            _context.SaveChanges();
             return t;
         }
     }

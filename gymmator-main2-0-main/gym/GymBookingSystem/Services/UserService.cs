@@ -31,6 +31,9 @@ namespace GymBookingSystem.Services
 
         public User CreateUser(UserDto dto)
         {
+            if (!ValidUserDto(dto))
+                return null;
+
             if (!PasswordFollowsGuidelines(dto.Password))
                 return null;
 
@@ -83,17 +86,6 @@ namespace GymBookingSystem.Services
             return true;
         }
 
-        private bool ValidLoginDto(LoginDto dto)
-        {
-            if (string.IsNullOrEmpty(dto.Password) || dto.Password.Length < 8)
-                return false;
-
-            if (string.IsNullOrEmpty(dto.Username))
-                return false;
-
-            return true;
-        }
-
         private bool ValidUserDto(UserDto dto)
         {
             if (string.IsNullOrEmpty(dto.FirstName))
@@ -108,14 +100,13 @@ namespace GymBookingSystem.Services
             if (string.IsNullOrEmpty(dto.Username))
                 return false;
 
-            if (!PasswordFollowsGuidelines(dto.Password))
-                return false;
-
             return true;
         }
 
         public User Login(LoginDto dto)
-        {         
+        {
+            if (!ValidLoginDto(dto))
+                return null;
            LoginCredentials lc = _context.LoginCredentials.Where(x => x.Username == dto.Username).FirstOrDefault();
 
             if (lc == null)
@@ -160,6 +151,16 @@ namespace GymBookingSystem.Services
 
             ResetLoginAttempts(lc);
             return u;
+        }
+        private bool ValidLoginDto(LoginDto dto)
+        {
+            if (string.IsNullOrEmpty(dto.Password) || dto.Password.Length < 8)
+                return false;
+
+            if (string.IsNullOrEmpty(dto.Username))
+                return false;
+
+            return true;
         }
 
         private bool AllowedToLogin(LoginCredentials lc)

@@ -95,6 +95,7 @@ namespace GymBookingSystem.Services
             g.OperationalHours = dto.OperationalHours;
             g.PhoneNumber = dto.PhoneNumber;
             _context.Update(g);
+            _context.SaveChanges();
             return g;
         }
     }
