@@ -40,12 +40,12 @@ namespace GymBookingSystem.Controllers
     
         
         [HttpPost("Login")]
-        public IActionResult Login([FromBody]LoginModel login) 
+        public IActionResult Login([FromBody]LoginDto dto) 
         {
-            User user = _UserService.Login(login.Username, login.Password);
+            User user = _UserService.Login(dto);
             if(user == null)
             {
-                return BadRequest();
+                return BadRequest("Invalid username or password");
             }
             else
             {
@@ -54,7 +54,7 @@ namespace GymBookingSystem.Controllers
         }
 
         [Authorize]
-        [HttpPost("ChangePassword")]
+        [HttpPut("ChangePassword")]
         public IActionResult ChangePassword([FromBody]ChangePasswordDto dto)
         {
             string message = _UserService.ChangePassword(dto.UserId, dto.NewPassword, dto.OldPassword);
@@ -67,77 +67,6 @@ namespace GymBookingSystem.Controllers
                 return BadRequest();
             }
 
-        }
-
-        [HttpGet("GetTrainingClass")]
-        public IActionResult GetTrainingClass(int Id)
-        {
-            TrainingClass t = _UserService.GetTrainingClass(Id);
-            if (t == null)
-            {
-                return BadRequest();
-            }
-            else
-            {
-                return Ok(t);
-            }
-        }
-
-        [HttpGet("GetTrainingClasses")]
-        public IActionResult GetTrainingClasses()
-        {
-            List<TrainingClass> t = _UserService.GetTrainingClasses();
-            if (t == null)
-            {
-                return BadRequest();
-            }
-            else
-            {
-                return Ok(t);
-            }
-        }
-
-
-        [HttpGet("GetTrainingClassesAtDate")]
-        public IActionResult GetTrainingClassesAtDate(int year, int month, int day)
-        {
-            
-            List<TrainingClass> t = _UserService.GetTrainingClassesAtDate(year, month, day);
-            if (t == null)
-            {
-                return BadRequest();
-            }
-            else
-            {
-                return Ok(t);
-            }
-        }
-
-        [EnableCors("MyPolicy")]
-        [HttpGet("GetGym")]
-        public IActionResult GetGym()
-        {
-            List<Gym> g = _UserService.GetGyms();
-            if (g == null)
-            {
-                return BadRequest();
-            }
-            else return Ok(g);
-        }
-
-        [HttpGet("GetTrainingClassesAtGym")]
-        public IActionResult GetTrainingClassesAtGym(int GymId)
-        {
-            List<TrainingClass> t = _UserService.GetTrainingClassesAtGym(GymId);
-            if (t == null)
-            {
-                return BadRequest();
-            }
-
-            else
-            {
-                return Ok(t);
-            }
         }
 
         [Authorize]

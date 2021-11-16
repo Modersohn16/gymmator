@@ -28,7 +28,7 @@ namespace GymBookingSystem.Services
                 LastName = dto.LastName,
                 Email = dto.Email,
                 Role = role,
-                RoleId = role.Id
+                RoleId = role.Id  
             };
 
             LoginCredentials lc = new LoginCredentials();
@@ -73,110 +73,7 @@ namespace GymBookingSystem.Services
             }
         }
 
-        public Gym CreateGym(GymDto dto)
-        {
-            Gym G = new Gym()
-            {
-                Name = dto.Name,
-                StreetAdress = dto.StreetAdress,
-                PostalCode = dto.PostalCode,
-                City = dto.City,
-                OperationalHours = dto.OperationalHours,
-                MaxPeople = dto.MaxPeople,
-                Email = dto.Email,
-                PhoneNumber = dto.PhoneNumber
-            };
 
-            _context.Gyms.Add(G);
-            _context.SaveChanges();
-
-            return G;
-
-        }
-
-
-        public TrainingClass CreateTrainingClass(TrainingClassDto dto)
-        {
-            TrainingClass tc = new TrainingClass()
-            {
-                //TrainingClassId = dto.TrainingClassId,
-                GymId = dto.GymId,
-                Name = dto.Name,
-                TrainerId = dto.TrainerId,
-                MaxPeople = dto.MaxPeople,
-                Description = dto.Description,
-                Start = dto.Start,
-                End = dto.End
-            };
-
-            _context.TrainingClasses.Add(tc);
-            _context.SaveChanges();
-            return tc;
-        }
-
-
-        public TrainingClass GetTrainingClass(int Id)
-        {
-            var t = _context.TrainingClasses.Where(x => x.TrainingClassId == Id).FirstOrDefault();
-
-            if (t != null)
-            {
-                return t;
-            }
-
-            else
-            {
-                return null;
-            }
-        }
-
-
-        public List<TrainingClass> GetTrainingClasses()
-        {
-            List<TrainingClass> t = _context.TrainingClasses.ToList();
-
-            if (t != null)
-            {
-                return t;
-            }
-
-            else
-            {
-                return null;
-            }
-
-        }
-
-        public Gym GetGym(int Id)
-        {
-            var g = _context.Gyms.Where(x => x.GymId == Id).FirstOrDefault();
-
-            if (g != null)
-            {
-                return g;
-            }
-
-            else
-            {
-                return null;
-            }
-        }
-
-        public List<Gym> GetGyms()
-        {
-            List<Gym> g = _context.Gyms.ToList();
-
-            if (g != null)
-            {
-                return g;
-            }
-
-            else
-            {
-                return null;
-            }
-
-        }
 
         public List<TrainingClass> GetTrainingClassesAtGym(int GymId)
         {

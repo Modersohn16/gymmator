@@ -35,37 +35,6 @@ namespace GymBookingSystem.Controllers
             }
         }
 
-        [Authorize(Roles = Role.Admin)]
-        [HttpPost("CreateGym")]
-        public IActionResult CreateGym(GymDto dto)
-        {
-            Gym g = _AdminService.CreateGym(dto);
-            if (g == null)
-            {
-                return BadRequest();
-            }
-            else
-            {
-                return Created("Gym created successfully.", g);
-            }
-        }
-
-        [Authorize(Roles = Role.Admin)]
-        [HttpPost("CreateTrainingClass")]
-        public IActionResult CreateTrainingClass(TrainingClassDto dto)
-        {
-            TrainingClass t = _AdminService.CreateTrainingClass(dto);
-            if (t == null)
-            {
-                return BadRequest();
-            }
-            else
-            {
-                return Created("Training class created successfully.", t);
-            }
-        }
-
-
         [HttpGet("GetUsersBookings")]
         public IActionResult GetUsersBookings(int userId)
         {

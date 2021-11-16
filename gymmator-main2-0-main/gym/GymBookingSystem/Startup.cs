@@ -92,6 +92,8 @@ namespace GymBookingSystem
             options.UseSqlServer(Configuration.GetConnectionString("GymConnectionString")));
             services.AddScoped<GymContext>();
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IGymService, GymService>();
+            services.AddScoped<ITrainingClassService, TrainingClassService>();
             services.AddScoped<IAdminService, AdminService>();
             services.AddMvc(option => option.EnableEndpointRouting = false);
 

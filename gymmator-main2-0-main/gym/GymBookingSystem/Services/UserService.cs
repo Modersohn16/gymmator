@@ -10,6 +10,7 @@ using System.IdentityModel.Tokens.Jwt;
 using Microsoft.Extensions.Configuration;
 using System.Security.Claims;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace GymBookingSystem.Services
 {
@@ -30,6 +31,9 @@ namespace GymBookingSystem.Services
 
         public User CreateUser(UserDto dto)
         {
+            if (!PasswordFollowsGuidelines(dto.Password))
+                return null;
+
             var userRole = _context.Roles.Where(x => x.Title == "User").FirstOrDefault();
 
             User U = new User()
@@ -55,10 +59,64 @@ namespace GymBookingSystem.Services
             return U;
         }
 
+        /*
+         * Password requirements: 8 - 36 characters. At least:
+         * 1 capital letter
+         * 1 lower letter
+         * 1 special character
+         */
+        private bool PasswordFollowsGuidelines(string pass)
+        {
+            var hasSymbols = new Regex(@"[!@#$%^&*()_+=\[{\]};:<>|./?,-]");
 
-        public User Login(string username, string password)
+            if (pass.Length < 8 || pass.Length > 36)
+                return false;
+            if (!pass.Any(char.IsDigit))
+                return false;
+            if (!pass.Any(char.IsLower))
+                return false;
+            if (!pass.Any(char.IsUpper))
+                return false;
+            if (!hasSymbols.IsMatch(pass))
+                return false;
+
+            return true;
+        }
+
+        private bool ValidLoginDto(LoginDto dto)
+        {
+            if (string.IsNullOrEmpty(dto.Password) || dto.Password.Length < 8)
+                return false;
+
+            if (string.IsNullOrEmpty(dto.Username))
+                return false;
+
+            return true;
+        }
+
+        private bool ValidUserDto(UserDto dto)
+        {
+            if (string.IsNullOrEmpty(dto.FirstName))
+                return false;
+
+            if (string.IsNullOrEmpty(dto.LastName))
+                return false;
+
+            if (string.IsNullOrEmpty(dto.Email))
+                return false;
+
+            if (string.IsNullOrEmpty(dto.Username))
+                return false;
+
+            if (!PasswordFollowsGuidelines(dto.Password))
+                return false;
+
+            return true;
+        }
+
+        public User Login(LoginDto dto)
         {         
-           LoginCredentials lc = _context.LoginCredentials.Where(x => x.Username == username).FirstOrDefault();
+           LoginCredentials lc = _context.LoginCredentials.Where(x => x.Username == dto.Username).FirstOrDefault();
 
             if (lc == null)
             {
@@ -71,7 +129,7 @@ namespace GymBookingSystem.Services
                 return null;
             }
 
-            if (!_hasher.ValidatePassword(password, lc.PasswordHash))
+            if (!_hasher.ValidatePassword(dto.Password, lc.PasswordHash))
             {
                 UpdateLoginAttempts(lc);
                 return null;
@@ -135,6 +193,10 @@ namespace GymBookingSystem.Services
 
         public string ChangePassword(int userId, string newPassword, string oldPassword)
         {
+            if(oldPassword == newPassword)
+            {
+                return "Old password and new password are same";
+            }
             LoginCredentials lc = _context.LoginCredentials.Where(x => x.UserId == userId).FirstOrDefault();
 
             if(lc == null)
@@ -154,102 +216,10 @@ namespace GymBookingSystem.Services
             return "Password changed successfully";
         }
 
-        public TrainingClass GetTrainingClass(int Id)
-        {
-            var t = _context.TrainingClasses.Where(x => x.TrainingClassId == Id).FirstOrDefault();
-            
-            if (t!=null)
-            {
-                return t;
-            }
-
-            else
-            {
-                return null;
-            }
-        }
 
 
-        public List<TrainingClass> GetTrainingClasses()
-        {
-            List < TrainingClass > t = _context.TrainingClasses.ToList();
-
-            if (t != null)
-            {
-                return t;
-            }
-
-            else
-            {
-                return null;
-            }
-
-        }
-
-        public Gym GetGym(int Id)
-        {
-            var g = _context.Gyms.Where(x => x.GymId == Id).FirstOrDefault();
-
-            if (g != null)
-            {
-                return g;
-            }
-
-            else
-            {
-                return null;
-            }
-        }
-
-        public List<Gym> GetGyms()
-        {
-            List<Gym> g = _context.Gyms.ToList();
-
-            if (g != null)
-            {
-                return g;
-            }
-
-            else
-            {
-                return null;
-            }
-
-        }
-
-        public List<TrainingClass> GetTrainingClassesAtGym(int GymId)
-        {
-            List<TrainingClass> t = _context.TrainingClasses.Where(x => x.GymId == GymId).ToList();
-
-            if (t != null)
-            {
-                return t;
-            }
-
-            else
-            {
-                return null;
-            }
-
-        }
 
 
-        public List<TrainingClass> GetTrainingClassesAtDate(int year, int month, int day)
-        {
-            DateTime chosenDate = new DateTime(year, month, day);
-            List<TrainingClass> t = _context.TrainingClasses.Where(x => x.Start.Date == chosenDate).ToList();
-
-            if (t != null)
-            {
-                return t;
-            }
-
-            else
-            {
-                return null;
-            }
-
-        }
 
         public Booking CreateBooking(BookingDto dto)
         {

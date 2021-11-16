@@ -7,12 +7,11 @@ using GymBookingSystem.Models.DTO;
 
 namespace GymBookingSystem.Services
 {
-    public interface IAdminService
+    public interface IGymService
     {
-        User CreateUser(UserDto dto);
-        User DeleteUser(int UserId);
-        List<Booking> GetUsersBookings(int userId);
-        Trainer CreateTrainer(TrainerDto dto);
-
+        Gym GetGym(int Id);
+        List<Gym> GetGyms();
+        Gym CreateGym(GymDto dto);
+        Gym DeleteGym(int GymId);
     }
 }
