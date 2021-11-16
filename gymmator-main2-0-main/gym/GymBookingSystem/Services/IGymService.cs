@@ -13,5 +13,6 @@ namespace GymBookingSystem.Services
         List<Gym> GetGyms();
         Gym CreateGym(GymDto dto);
         Gym DeleteGym(int GymId);
+        Gym UpdateGym(int gymId, GymDto dto);
     }
 }

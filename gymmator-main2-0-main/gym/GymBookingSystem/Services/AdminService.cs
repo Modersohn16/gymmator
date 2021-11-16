@@ -139,8 +139,10 @@ namespace GymBookingSystem.Services
 
         public User DeleteUser(int UserId)
         {
-            List<Booking> b = _context.Bookings.Where(x => x.UserId == UserId).ToList();
             User U = _context.Users.Where(x => x.UserId == UserId).FirstOrDefault();
+            if (U == null)
+                return null;
+            List<Booking> b = _context.Bookings.Where(x => x.UserId == UserId).ToList();
             LoginCredentials lc = _context.LoginCredentials.Where(x => x.UserId == UserId).FirstOrDefault();
 
             _context.LoginCredentials.Remove(lc);
@@ -149,6 +151,15 @@ namespace GymBookingSystem.Services
             _context.SaveChanges();
 
             return U;
+        }
+        public Trainer DeleteTrainer(int TrainerId)
+        {
+            Trainer t = _context.Trainers.Where(x => x.TrainerId == TrainerId).FirstOrDefault();
+            if (t == null)
+                return null;
+            _context.Trainers.Remove(t);
+            _context.SaveChanges();
+            return t;
         }
     }
 }

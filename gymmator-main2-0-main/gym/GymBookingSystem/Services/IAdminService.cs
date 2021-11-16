@@ -13,6 +13,6 @@ namespace GymBookingSystem.Services
         User DeleteUser(int UserId);
         List<Booking> GetUsersBookings(int userId);
         Trainer CreateTrainer(TrainerDto dto);
-
+        Trainer DeleteTrainer(int TrainerId);
     }
 }

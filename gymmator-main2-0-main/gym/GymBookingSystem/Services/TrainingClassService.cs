@@ -93,10 +93,10 @@ namespace GymBookingSystem.Services
             _context.SaveChanges();
             return tc;
         }
-        public TrainingClass DeleteTrainingClass(int TrainingClassId)
+        public TrainingClass DeleteTrainingClass(int trainingClassId)
         {
-            List<Booking> b = _context.Bookings.Where(x => x.TrainingClassId == TrainingClassId).ToList();
-            TrainingClass t = _context.TrainingClasses.Where(x => x.TrainingClassId == TrainingClassId).FirstOrDefault();
+            List<Booking> b = _context.Bookings.Where(x => x.TrainingClassId == trainingClassId).ToList();
+            TrainingClass t = _context.TrainingClasses.Where(x => x.TrainingClassId == trainingClassId).FirstOrDefault();
 
             if (t == null)
             {
@@ -105,6 +105,21 @@ namespace GymBookingSystem.Services
             _context.TrainingClasses.Remove(t);
             b.ForEach(x => _context.Bookings.Remove(x));
             _context.SaveChanges();
+            return t;
+        }
+        public TrainingClass UpdateTrainingClass(int trainingClassId, TrainingClassDto dto)
+        {
+            TrainingClass t = _context.TrainingClasses.Where(x => x.TrainingClassId == trainingClassId).FirstOrDefault();
+            if (t == null)
+                return null;
+            t.Name = dto.Name;
+            t.GymId = dto.GymId;
+            t.MaxPeople = dto.MaxPeople;
+            t.TrainerId = dto.TrainerId;
+            t.Description = dto.Description;
+            t.Start = dto.Start;
+            t.End = dto.End;
+            _context.Update(t);
             return t;
         }
     }

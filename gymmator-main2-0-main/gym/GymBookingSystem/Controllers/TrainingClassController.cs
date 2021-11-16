@@ -95,9 +95,24 @@ namespace GymBookingSystem.Controllers
 
         [Authorize(Roles = Role.Admin)]
         [HttpDelete("DeleteTrainingClass")]
-        public IActionResult DeleteUser(int TrainingClassId)
+        public IActionResult DeleteTrainingClass(int TrainingClassId)
         {
             TrainingClass t = _TrainingClassService.DeleteTrainingClass(TrainingClassId);
+            if (t == null)
+            {
+                return BadRequest();
+            }
+            else
+            {
+                return Ok(t);
+            }
+        }
+
+        [Authorize(Roles = Role.Admin)]
+        [HttpPut("UpdateTrainingClass")]
+        public IActionResult UpdateTrainingClass(int TrainingClassId, TrainingClassDto dto)
+        {
+            TrainingClass t = _TrainingClassService.UpdateTrainingClass(TrainingClassId, dto);
             if (t == null)
             {
                 return BadRequest();

@@ -35,6 +35,7 @@ namespace GymBookingSystem.Controllers
             }
         }
 
+        [Authorize]
         [HttpGet("GetUsersBookings")]
         public IActionResult GetUsersBookings(int userId)
         {
@@ -64,7 +65,7 @@ namespace GymBookingSystem.Controllers
             }
         }
 
-
+        [Authorize]
         [HttpDelete("DeleteUser")]
         public IActionResult DeleteUser(int UserId)
         {
@@ -76,6 +77,21 @@ namespace GymBookingSystem.Controllers
             else
             {
                 return Ok(U);
+            }
+        }
+
+        [Authorize(Roles = Role.Admin)]
+        [HttpDelete("DeleteTrainer")]
+        public IActionResult DeleteTrainer(int TrainerId)
+        {
+            Trainer t = _AdminService.DeleteTrainer(TrainerId);
+            if (t == null)
+            {
+                return BadRequest();
+            }
+            else
+            {
+                return Ok(t);
             }
         }
     }

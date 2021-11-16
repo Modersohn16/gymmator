@@ -216,11 +216,6 @@ namespace GymBookingSystem.Services
             return "Password changed successfully";
         }
 
-
-
-
-
-
         public Booking CreateBooking(BookingDto dto)
         {
             Booking b = new Booking()

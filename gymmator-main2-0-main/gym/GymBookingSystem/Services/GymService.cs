@@ -81,5 +81,21 @@ namespace GymBookingSystem.Services
             _context.SaveChanges();
             return g;
         }
+        public Gym UpdateGym(int gymId, GymDto dto)
+        {
+            Gym g = _context.Gyms.Where(x => x.GymId == gymId).FirstOrDefault();
+            if (g == null)
+                return null;
+            g.Name = dto.Name;
+            g.Email = dto.Email;
+            g.StreetAdress = dto.StreetAdress;
+            g.PostalCode = dto.PostalCode;
+            g.City = dto.City;
+            g.MaxPeople = dto.MaxPeople;
+            g.OperationalHours = dto.OperationalHours;
+            g.PhoneNumber = dto.PhoneNumber;
+            _context.Update(g);
+            return g;
+        }
     }
 }
