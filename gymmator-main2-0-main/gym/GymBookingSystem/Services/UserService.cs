@@ -288,7 +288,11 @@ namespace GymBookingSystem.Services
             List<Booking> b = _context.Bookings.Where(x => x.UserId == UserId).ToList();
             User U = _context.Users.Where(x => x.UserId == UserId).FirstOrDefault();
             LoginCredentials lc = _context.LoginCredentials.Where(x => x.UserId == UserId).FirstOrDefault();
-
+            
+            if(lc == null)
+            {
+                return null;
+            }
             _context.LoginCredentials.Remove(lc);
             b.ForEach(x => _context.Bookings.Remove(x));
             _context.Users.Remove(U);
