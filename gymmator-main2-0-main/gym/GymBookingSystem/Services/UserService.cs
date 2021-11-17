@@ -345,7 +345,7 @@ namespace GymBookingSystem.Services
                 if (t != null)
                     return "Password reset";
                 else
-                    return "Incorrent username/email";
+                    return "Incorrect username/email";
             }
             if (!string.IsNullOrWhiteSpace(email))
             {
@@ -354,10 +354,10 @@ namespace GymBookingSystem.Services
                 if (t != null)
                     return "Password reset";
                 else
-                    return "Incorrent username/email";
+                    return "Incorrect username/email";
             }
             else
-                return "Incorrent username/email";
+                return "Incorrect username/email";
         }
 
         private bool SendEmail(string recipient, string newPass)

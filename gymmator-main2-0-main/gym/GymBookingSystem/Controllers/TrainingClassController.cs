@@ -8,6 +8,7 @@ using GymBookingSystem.Models.DTO;
 using GymBookingSystem.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.Logging;
+using Serilog;
 
 namespace GymBookingSystem.Controllers
 {
@@ -26,13 +27,16 @@ namespace GymBookingSystem.Controllers
         [HttpGet("GetTrainingClass")]
         public IActionResult GetTrainingClass(int Id)
         {
+            Log.Information($"Attempting to retrieve training class. Id: {Id}.");
             TrainingClass t = _TrainingClassService.GetTrainingClass(Id);
             if (t == null)
             {
+                Log.Error("Failed to retrieve training class.");
                 return BadRequest();
             }
             else
             {
+                Log.Information("Training class retrieved successfully." + t);
                 return Ok(t);
             }
         }
@@ -42,44 +46,56 @@ namespace GymBookingSystem.Controllers
         [HttpGet("GetTrainingClasses")]
         public IActionResult GetTrainingClasses()
         {
+            Log.Information("Attempting to retrieve training classes.");
             List<TrainingClass> t = _TrainingClassService.GetTrainingClasses();
             if (t == null)
             {
+                Log.Error("Failed to retrieve training classes.");
                 return BadRequest();
             }
             else
             {
+                Log.Information("Training classes retrieved successfully." + t);
                 return Ok(t);
             }
         }
 
-        //Change to datetime
         [HttpGet("GetTrainingClassesAtDate")]
-        public IActionResult GetTrainingClassesAtDate(int year, int month, int day)
+        public IActionResult GetTrainingClassesAtDate(DateTime dateTime)
         {
-
-            List<TrainingClass> t = _TrainingClassService.GetTrainingClassesAtDate(year, month, day);
+            Log.Information($"Attempting to retrieve training classes at date: {dateTime}.");
+            List<TrainingClass> t = _TrainingClassService.GetTrainingClassesAtDate(dateTime);
             if (t == null)
             {
+                Log.Error("Failed to retrieve training classes.");
                 return BadRequest();
             }
             else
             {
+                Log.Information("Training classes retrieved successfully. Dto: " + t);
                 return Ok(t);
             }
         }
 
         [HttpGet("GetTrainingClassesAtGym")]
-        public IActionResult GetTrainingClassesAtGym(int GymId)
+        public IActionResult GetTrainingClassesAtGym(int gymId)
         {
-            List<TrainingClass> t = _TrainingClassService.GetTrainingClassesAtGym(GymId);
-            if (t == null)
-            {
-                return BadRequest();
-            }
+            Log.Information($"Attempting to retrieve training classes at gym id: {gymId}.");
+            var t = _TrainingClassService.GetTrainingClassesAtGym(gymId);
 
+            if (t.Name == null || t.Name.Length < 1)
+            {
+                Log.Error("Failed to find gym for training classes");
+                return NotFound("Failed to find gym for training classes");
+            }
+            if(t.Classes == null || t.Classes.Count < 1)
+            {
+                Log.Error("Failed to find training classes");
+                return BadRequest("Failed to find training classes");
+            }
             else
             {
+                Log.Information("Training classes retrieved successfully. Dto: " + t);
                 return Ok(t);
             }
         }
@@ -88,13 +104,16 @@ namespace GymBookingSystem.Controllers
         [HttpPost("CreateTrainingClass")]
         public IActionResult CreateTrainingClass(TrainingClassDto dto)
         {
+            Log.Information("Attempting to create training class.");
             TrainingClass t = _TrainingClassService.CreateTrainingClass(dto);
             if (t == null)
             {
+                Log.Error("Failed to create training class.");
                 return BadRequest();
             }
             else
             {
+                Log.Information("Training class created successfully. " + t);
                 return Created("Training class created successfully.", t);
             }
         }
@@ -103,13 +122,16 @@ namespace GymBookingSystem.Controllers
         [HttpDelete("DeleteTrainingClass")]
         public IActionResult DeleteTrainingClass(int TrainingClassId)
         {
+            Log.Information("Attempting to delete training class.");
             TrainingClass t = _TrainingClassService.DeleteTrainingClass(TrainingClassId);
             if (t == null)
             {
+                Log.Error("Failed to delete training class.");
                 return BadRequest();
             }
             else
             {
+                Log.Information("Training class deleted successfully. " + t);
                 return Ok(t);
             }
         }
@@ -118,13 +140,16 @@ namespace GymBookingSystem.Controllers
         [HttpPut("UpdateTrainingClass")]
         public IActionResult UpdateTrainingClass(int TrainingClassId, TrainingClassDto dto)
         {
+            Log.Information("Attempting to update training class.");
             TrainingClass t = _TrainingClassService.UpdateTrainingClass(TrainingClassId, dto);
             if (t == null)
             {
+                Log.Error("Failed to update training class.");
                 return BadRequest();
             }
             else
             {
+                Log.Information("Training class updated successfully. " + t);
                 return Ok(t);
             }
         }

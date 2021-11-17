@@ -34,7 +34,7 @@ namespace GymBookingSystem.Controllers
             User u = _UserService.CreateUser(dto);
             if (u == null)
             {
-                Log.Warning("Failed to create user" + dto);
+                Log.Error("Failed to create user" + dto);
                 return BadRequest();
             }
             else
@@ -52,7 +52,7 @@ namespace GymBookingSystem.Controllers
             User user = _UserService.Login(dto);
             if(user == null)
             {
-                Log.Information("Failed to authenticate user: " + dto.Username);
+                Log.Warning("Failed to authenticate user: " + dto.Username);
                 return BadRequest("Invalid username or password");
             }
             else
@@ -66,13 +66,16 @@ namespace GymBookingSystem.Controllers
         [HttpPut("ChangePassword")]
         public IActionResult ChangePassword([FromBody]ChangePasswordDto dto)
         {
+            Log.Information("Attempting to change password.");
             string message = _UserService.ChangePassword(dto.UserId, dto.NewPassword, dto.OldPassword);
             if(message.Contains("successfully"))
             {
+                Log.Information("Password changed successfully.");
                 return Ok(message);
             }
             else
             {
+                Log.Error("Failed to change password.");
                 return BadRequest();
             }
 
@@ -82,13 +85,16 @@ namespace GymBookingSystem.Controllers
         [HttpPost("CreateBooking")]
         public IActionResult CreateBooking(BookingDto dto)
         {
+            Log.Information("Attempting to create booking.");
             Booking b = _UserService.CreateBooking(dto);
             if (b == null)
             {
+                Log.Error("Failed to create booking.");
                 return BadRequest();
             }
             else
             {
+                Log.Information("Booking created successfully. " + b);
                 return Created("yay", b);
             }
         }
@@ -97,14 +103,17 @@ namespace GymBookingSystem.Controllers
         [HttpGet("GetUsersBookings")]
         public IActionResult GetUsersBookings()
         {
+            Log.Information("Attempting to retrieve user bookings.");
             int userId = GetUserId();
             List<Booking> b = _UserService.GetUsersBookings(userId);
             if (b == null)
             {
+                Log.Error("Failed to retrieve user bookings.");
                 return BadRequest();
             }
             else
             {
+                Log.Information("Booking retrieved successfully. " + b);
                 return Ok(b);
             }
         }
@@ -113,13 +122,16 @@ namespace GymBookingSystem.Controllers
         [HttpDelete("DeleteUser")]
         public IActionResult DeleteUser(int UserId)
         {
+            Log.Information("Attempting to delete user.");
             User U = _UserService.DeleteUser(UserId);
             if (U == null)
             {
+                Log.Error("Failed to delete user.");
                 return BadRequest();
             }
             else
             {
+                Log.Information("User deleted successfully. " + U);
                 return Ok(U);
             }
         }
@@ -128,13 +140,16 @@ namespace GymBookingSystem.Controllers
         [HttpDelete("DeleteBooking")]
         public IActionResult DeleteBooking(int bookingId)
         {
+            Log.Information("Attempting to delete booking.");
             Booking b = _UserService.DeleteBooking(bookingId);
             if (b == null)
             {
+                Log.Error("Failed to delete booking.");
                 return BadRequest();
             }
             else
             {
+                Log.Information("booking deleted successfully. " + b);
                 return Ok(b);
             }
         }
@@ -147,7 +162,7 @@ namespace GymBookingSystem.Controllers
             User u = _UserService.UpdateUser(userId, dto);
             if (u == null)
             {
-                Log.Warning("Failed to update user" + dto);
+                Log.Error("Failed to update user" + dto);
                 return BadRequest();
             }
             else
@@ -165,7 +180,7 @@ namespace GymBookingSystem.Controllers
             Booking b = _UserService.UpdateBooking(bookingId, dto);
             if (b == null)
             {
-                Log.Warning("Failed to update booking" + dto);
+                Log.Error("Failed to update booking" + dto);
                 return BadRequest();
             }
             else
@@ -178,8 +193,18 @@ namespace GymBookingSystem.Controllers
         [HttpPost("ResetPassword")]
         public IActionResult ResetPassword(string username, string email)
         {
+            Log.Information($"Attempting to reset password for user {username}.");
             var t = _UserService.ResetPassword(username, email);
-            return Ok(t);
+            if (t == null)
+            {
+                Log.Error("Failed to reset password.");
+                return BadRequest();
+            }
+            else
+            {
+                Log.Information("Password reset successfully.");
+                return Ok(t);
+            }
         }
     }
 }

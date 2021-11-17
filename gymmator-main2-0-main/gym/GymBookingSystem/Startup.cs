@@ -15,6 +15,8 @@ using GymBookingSystem.Cryptography;
 using System.Text;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Serilog;
+using Serilog.Sinks.Elasticsearch;
 
 namespace GymBookingSystem
 {
@@ -31,6 +33,16 @@ namespace GymBookingSystem
             .AddEnvironmentVariables();
             this.Configuration = builder.Build();
 
+            var elasticOptions = new ElasticsearchSinkOptions(new Uri(Configuration.GetConnectionString("SerilogURL")))
+            {
+                AutoRegisterTemplate = true,
+                MinimumLogEventLevel = Serilog.Events.LogEventLevel.Debug
+            };
+
+            Log.Logger = new LoggerConfiguration()
+            .Enrich.FromLogContext()
+            .WriteTo.Elasticsearch(elasticOptions)
+            .CreateLogger();
         }
 
         public IConfiguration Configuration { get; }

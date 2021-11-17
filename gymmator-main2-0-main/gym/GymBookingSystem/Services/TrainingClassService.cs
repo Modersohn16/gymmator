@@ -44,26 +44,24 @@ namespace GymBookingSystem.Services
             }
         }
 
-        public List<TrainingClass> GetTrainingClassesAtGym(int GymId)
+        public TrainingClassListDto GetTrainingClassesAtGym(int GymId)
         {
+            Gym g = _context.Gyms.Where(x => x.GymId == GymId).FirstOrDefault();
             List<TrainingClass> t = _context.TrainingClasses.Where(x => x.GymId == GymId).ToList();
 
-            if (t != null)
+            TrainingClassListDto dto = new TrainingClassListDto
             {
-                return t;
-            }
-
-            else
-            {
-                return null;
-            }
-
+                GymId = g.GymId,
+                Name = g.Name,
+                Classes = t
+            };
+            
+            return dto;
         }
 
-        public List<TrainingClass> GetTrainingClassesAtDate(int year, int month, int day)
+        public List<TrainingClass> GetTrainingClassesAtDate(DateTime dateTime)
         {
-            DateTime chosenDate = new DateTime(year, month, day);
-            List<TrainingClass> t = _context.TrainingClasses.Where(x => x.Start.Date == chosenDate).ToList();
+            List<TrainingClass> t = _context.TrainingClasses.Where(x => x.Start.Date == dateTime).ToList();
 
             if (t != null)
             {

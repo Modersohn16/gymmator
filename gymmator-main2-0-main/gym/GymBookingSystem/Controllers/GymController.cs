@@ -9,6 +9,7 @@ using GymBookingSystem.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.Extensions.Logging;
+using Serilog;
 
 namespace GymBookingSystem.Controllers
 {
@@ -29,51 +30,69 @@ namespace GymBookingSystem.Controllers
         [HttpPost("CreateGym")]
         public IActionResult CreateGym(GymDto dto)
         {
+            Log.Information("Attempting to create gym.");
             Gym g = _GymService.CreateGym(dto);
             if (g == null)
             {
+                Log.Warning("Failed to create gym.");
                 return BadRequest();
             }
             else
             {
+                Log.Information("Gym created successfully.");
                 return Created("Gym created successfully.", g);
             }
         }
 
-        [EnableCors("MyPolicy")]
+
         [HttpGet("GetGyms")]
         public IActionResult GetGyms()
         {
+            Log.Information("Attempting to retrieve gyms.");
             List<Gym> g = _GymService.GetGyms();
             if (g == null)
             {
+                Log.Warning("Failed to retrieve gyms.");
                 return BadRequest();
             }
-            else return Ok(g);
+            else
+            {
+                Log.Information("Gyms retrieved successfully.");
+                return Ok(g);
+            }
         }
 
         [HttpGet("GetGym")]
         public IActionResult GetGym(int GymId)
         {
+            Log.Information("Attempting to retrieve gyms.");
             Gym g = _GymService.GetGym(GymId);
             if (g == null)
             {
+                Log.Warning("Failed to retrieve gym.");
                 return BadRequest();
             }
-            else return Ok(g);
+            else
+            {
+                Log.Information("Gym retrieved successfully.");
+                return Ok(g);
+            }
         }
 
         [Authorize(Roles = Role.Admin)]
         [HttpDelete("DeleteGym")]
         public IActionResult DeleteUser(int GymId)
         {
+            Log.Information("Attempting to delete gym.");
             Gym g = _GymService.DeleteGym(GymId);
             if (g == null)
             {
+                Log.Warning("Failed to delete gym.");
                 return BadRequest();
             }
             else
             {
+                Log.Information("Gym deleted successfully. " + g);
                 return Ok(g);
             }
         }
@@ -82,13 +101,16 @@ namespace GymBookingSystem.Controllers
         [HttpPut("UpdateGym")]
         public IActionResult UpdateGym(int GymId, GymDto dto)
         {
+            Log.Information("Attempting to update gym.");
             Gym g = _GymService.UpdateGym(GymId, dto);
             if (g == null)
             {
+                Log.Warning("Failed to update gym.");
                 return BadRequest();
             }
             else
             {
+                Log.Information("Gym updated successfully. " + g);
                 return Ok(g);
             }
         }
