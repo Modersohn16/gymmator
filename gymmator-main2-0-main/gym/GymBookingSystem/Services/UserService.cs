@@ -393,19 +393,21 @@ namespace GymBookingSystem.Services
             if (lc == null)
                     return "No user found for this id";
 
-                var chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!$&?";
-                var stringChars = new char[12];
-                var random = new Random();
+            var chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!$&?";
+            var stringChars = new char[12];
+            var random = new Random();
 
-                for (int i = 0; i < stringChars.Length; i++)
-                {
-                    stringChars[i] = chars[random.Next(chars.Length)];
-                }
+            for (int i = 0; i < stringChars.Length; i++)
+            {
+                stringChars[i] = chars[random.Next(chars.Length)];
+            }
 
-                var finalString = new String(stringChars);
-                lc.PasswordHash = finalString;
-                _context.Update(lc);
-                string s = _context.LoginCredentials.Where(x => x.UserId == userId).FirstOrDefault().PasswordHash;
+            var finalString = new String(stringChars);
+            lc.PasswordHash = finalString;
+            _context.Update(lc);
+            _context.SaveChanges();
+
+            string s = _context.LoginCredentials.Where(x => x.UserId == userId).FirstOrDefault().PasswordHash;
 
             if (s == finalString)
                     return s;
