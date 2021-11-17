@@ -11,6 +11,8 @@ using Microsoft.Extensions.Configuration;
 using System.Security.Claims;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Net.Mail;
+using System.Net;
 
 namespace GymBookingSystem.Services
 {
@@ -20,6 +22,10 @@ namespace GymBookingSystem.Services
         private readonly string Secret1;
         private readonly IConfiguration _config;
         private readonly IHasher _hasher;
+        private readonly int EmailPort;
+        private readonly string EmailHost;
+        private readonly string EmailPassword;
+        private readonly string SenderEmail;
 
         public UserService(GymContext context, IHasher hasher, IConfiguration config)
         {
@@ -27,6 +33,11 @@ namespace GymBookingSystem.Services
             _context = context;
             _hasher = hasher;
             Secret1 = _config.GetConnectionString("Secret1");
+            EmailPort = int.Parse(_config.GetConnectionString("EmailPort"));
+            EmailPassword = _config.GetConnectionString("EmailPassword");
+            SenderEmail = _config.GetConnectionString("SenderEmail");
+            EmailHost = _config.GetConnectionString("EmailHost");
+
         }
 
         public User CreateUser(UserDto dto)
@@ -278,6 +289,7 @@ namespace GymBookingSystem.Services
 
             return b;
         }
+
         public Booking DeleteBooking(int bookingId)
         {
             Booking b = _context.Bookings.Where(x => x.BookingId == bookingId).FirstOrDefault();
@@ -322,6 +334,134 @@ namespace GymBookingSystem.Services
             _context.Update(u);
             _context.SaveChanges();
             return u;
+        }
+
+        public string ResetPassword(string username, string email)
+        {
+            if (!string.IsNullOrWhiteSpace(username))
+            {
+                var t = ResetPasswordByUsername(username);
+
+                if (t != null)
+                    return "Password reset";
+                else
+                    return "Incorrent username/email";
+            }
+            if (!string.IsNullOrWhiteSpace(email))
+            {
+                var t = ResetPasswordByEmail(email);
+
+                if (t != null)
+                    return "Password reset";
+                else
+                    return "Incorrent username/email";
+            }
+            else
+                return "Incorrent username/email";
+        }
+
+        private bool SendEmail(string recipient, string newPass)
+        {
+            if (string.IsNullOrWhiteSpace(recipient))
+                return false;
+
+            var smtpClient = new SmtpClient()
+            {
+                Port = EmailPort,
+                Credentials = new NetworkCredential(SenderEmail, EmailPassword),
+                EnableSsl = true,
+                Host = EmailHost
+            };
+
+            var mailMsg = new MailMessage
+            {
+                From = new MailAddress(SenderEmail),
+                Subject = "Password Reset",
+                Body = "This is an automated message to notify you that your password has been reset to: " + newPass + ". Please log in and change it immediately.",
+                IsBodyHtml = true,
+            };
+
+            mailMsg.To.Add(recipient);
+            smtpClient.Send(mailMsg);
+            return true;
+        }
+
+        private string NewPassword(int userId)
+        {
+                LoginCredentials lc = _context.LoginCredentials.Where(x => x.UserId == userId).FirstOrDefault();
+
+            if (lc == null)
+                    return "No user found for this id";
+
+                var chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!$&?";
+                var stringChars = new char[12];
+                var random = new Random();
+
+                for (int i = 0; i < stringChars.Length; i++)
+                {
+                    stringChars[i] = chars[random.Next(chars.Length)];
+                }
+
+                var finalString = new String(stringChars);
+                lc.PasswordHash = finalString;
+                _context.Update(lc);
+                string s = _context.LoginCredentials.Where(x => x.UserId == userId).FirstOrDefault().PasswordHash;
+
+            if (s == finalString)
+                    return s;
+                else
+                    return "Something went wrong, please try again or contact an admin.";
+        }
+
+        private LoginCredentials ResetPasswordByUsername(string username)
+        {
+            LoginCredentials lc = _context.LoginCredentials.Where(x => x.Username == username).FirstOrDefault();
+
+            if (lc == null)
+                    return null;
+
+            User u = _context.Users.Where(x => x.UserId == lc.UserId).FirstOrDefault();
+
+            if (lc != null && u != null)
+                {
+                    string s = NewPassword(lc.UserId);
+
+                    if (s == "No user found for this id" || s == "Something went wrong, please try again or contact an admin.")
+                        return null;
+
+                    bool c = SendEmail(u.Email, s);
+
+                    if (c)
+                        return lc;
+                    else
+                        return null;
+                }
+                else
+                    return null;
+        }
+        private LoginCredentials ResetPasswordByEmail(string email)
+        {
+           
+            User u = _context.Users.Where(x => x.Email == email).FirstOrDefault();
+
+            if (u != null)
+                {
+                    LoginCredentials lc = _context.LoginCredentials.Where(x => x.UserId == u.UserId).FirstOrDefault();
+
+                string s = NewPassword(lc.UserId);
+
+                    if (s == "No user found for this id" || s == "Something went wrong, please try again or contact an admin.")
+                        return null;
+
+                    bool c = SendEmail(u.Email, s);
+
+                    if (c)
+                        return lc;
+                    else
+                        return null;
+                }
+                else
+                    return null;
         }
     }
 }

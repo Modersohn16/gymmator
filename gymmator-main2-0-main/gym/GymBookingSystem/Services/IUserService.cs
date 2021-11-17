@@ -19,6 +19,7 @@ namespace GymBookingSystem.Services
         List<Booking> GetUsersBookings(int userId);
         User UpdateUser(int userId, UpdateUserDto dto);
         Booking UpdateBooking(int bookingId, BookingDto dto);
+        string ResetPassword(string username, string email);
 
 
     }

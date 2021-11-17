@@ -174,5 +174,12 @@ namespace GymBookingSystem.Controllers
                 return Ok(b);
             }
         }
+
+        [HttpPost("ResetPassword")]
+        public IActionResult ResetPassword(string username, string email)
+        {
+            var t = _UserService.ResetPassword(username, email);
+            return Ok(t);
+        }
     }
 }
