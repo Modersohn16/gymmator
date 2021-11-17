@@ -258,7 +258,39 @@ namespace GymBookingSystem.Services
                 return null;
             }
         }
+        public Booking UpdateBooking(int bookingId, BookingDto dto)
+        {
+            Booking b = _context.Bookings.Where(x => x.BookingId == bookingId).FirstOrDefault();
 
+            if (b == null)
+            {
+                return null;
+            }
+            b.Date = dto.Date;
+            b.GymId = dto.GymId;
+            b.Timestamp = dto.Timestamp;
+            b.TrainerId = dto.TrainerId;
+            b.TrainingClassId = dto.TrainingClassId;
+            b.UserId = dto.UserId;
+            
+            _context.Bookings.Update(b);
+            _context.SaveChanges();
+
+            return b;
+        }
+        public Booking DeleteBooking(int bookingId)
+        {
+            Booking b = _context.Bookings.Where(x => x.BookingId == bookingId).FirstOrDefault();
+
+            if (b == null)
+            {
+                return null;
+            }
+            _context.Bookings.Remove(b);
+            _context.SaveChanges();
+
+            return b;
+        }
 
         public User DeleteUser(int UserId)
         {
@@ -291,7 +323,6 @@ namespace GymBookingSystem.Services
             _context.SaveChanges();
             return u;
         }
-
     }
 }
 

@@ -54,6 +54,7 @@ namespace GymBookingSystem.Controllers
             }
         }
 
+
         [Authorize(Roles = Role.Admin)]
         [HttpPost("CreateTrainer")]
         public IActionResult CreateTrainer(TrainerDto dto)
@@ -101,7 +102,7 @@ namespace GymBookingSystem.Controllers
 
         [Authorize(Roles = Role.Admin)]
         [HttpPut("UpdateTrainer")]
-        public IActionResult UpdateGym(int trainerId, TrainerDto dto)
+        public IActionResult UpdateTrainer(int trainerId, TrainerDto dto)
         {
             Trainer t = _AdminService.UpdateTrainer(trainerId, dto);
             if (t == null)

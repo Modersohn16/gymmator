@@ -14,8 +14,11 @@ namespace GymBookingSystem.Services
         string ChangePassword(int userId, string newPassword, string oldPassword);
         User DeleteUser(int UserId);
         Booking CreateBooking(BookingDto dto);
+        Booking DeleteBooking(int bookingId);
+
         List<Booking> GetUsersBookings(int userId);
         User UpdateUser(int userId, UpdateUserDto dto);
+        Booking UpdateBooking(int bookingId, BookingDto dto);
 
 
     }

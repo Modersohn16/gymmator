@@ -79,7 +79,6 @@ namespace GymBookingSystem.Services
         {
             TrainingClass tc = new TrainingClass()
             {
-                //TrainingClassId = dto.TrainingClassId,
                 GymId = dto.GymId,
                 Name = dto.Name,
                 TrainerId = dto.TrainerId,

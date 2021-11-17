@@ -37,6 +37,8 @@ namespace GymBookingSystem.Controllers
             }
         }
 
+        // Show only available classes (not from previous days)
+        // optional with boolean
         [HttpGet("GetTrainingClasses")]
         public IActionResult GetTrainingClasses()
         {
@@ -51,6 +53,7 @@ namespace GymBookingSystem.Controllers
             }
         }
 
+        //Change to datetime
         [HttpGet("GetTrainingClassesAtDate")]
         public IActionResult GetTrainingClassesAtDate(int year, int month, int day)
         {

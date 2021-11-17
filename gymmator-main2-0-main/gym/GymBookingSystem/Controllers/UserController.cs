@@ -16,7 +16,7 @@ namespace GymBookingSystem.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class UserController : ControllerBase
+    public class UserController : ControllerBase2
     {
         private IUserService _UserService;
         private readonly ILogger<UserController> _logger;
@@ -95,8 +95,9 @@ namespace GymBookingSystem.Controllers
 
         [Authorize]
         [HttpGet("GetUsersBookings")]
-        public IActionResult GetUsersBookings(int userId)
+        public IActionResult GetUsersBookings()
         {
+            int userId = GetUserId();
             List<Booking> b = _UserService.GetUsersBookings(userId);
             if (b == null)
             {
@@ -124,17 +125,53 @@ namespace GymBookingSystem.Controllers
         }
 
         [Authorize]
-        [HttpPut("UpdateUser")]
-        public IActionResult UpdateUser(int userId, UpdateUserDto dto)
+        [HttpDelete("DeleteBooking")]
+        public IActionResult DeleteBooking(int bookingId)
         {
-            User u = _UserService.UpdateUser(userId, dto);
-            if (u == null)
+            Booking b = _UserService.DeleteBooking(bookingId);
+            if (b == null)
             {
                 return BadRequest();
             }
             else
             {
+                return Ok(b);
+            }
+        }
+
+        [Authorize]
+        [HttpPut("UpdateUser")]
+        public IActionResult UpdateUser(int userId, UpdateUserDto dto)
+        {
+            Log.Information("Attempting to update user: " + dto);
+            User u = _UserService.UpdateUser(userId, dto);
+            if (u == null)
+            {
+                Log.Warning("Failed to update user" + dto);
+                return BadRequest();
+            }
+            else
+            {
+                Log.Information("User updated successfully: " + u);
                 return Ok(u);
+            }
+        }
+
+        [Authorize]
+        [HttpPut("UpdateBooking")]
+        public IActionResult UpdateBooking(int bookingId, BookingDto dto)
+        {
+            Log.Information("Attempting to update booking: " + dto);
+            Booking b = _UserService.UpdateBooking(bookingId, dto);
+            if (b == null)
+            {
+                Log.Warning("Failed to update booking" + dto);
+                return BadRequest();
+            }
+            else
+            {
+                Log.Information("Booking updated successfully: " + b);
+                return Ok(b);
             }
         }
     }
