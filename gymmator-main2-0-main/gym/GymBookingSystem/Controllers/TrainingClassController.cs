@@ -24,6 +24,7 @@ namespace GymBookingSystem.Controllers
             _logger = logger;
         }
 
+        [AllowAnonymous]
         [HttpGet("GetTrainingClass")]
         public IActionResult GetTrainingClass(int Id)
         {
@@ -41,8 +42,7 @@ namespace GymBookingSystem.Controllers
             }
         }
 
-        // Show only available classes (not from previous days)
-        // optional with boolean
+        [AllowAnonymous]
         [HttpGet("GetTrainingClasses")]
         public IActionResult GetTrainingClasses(bool onlyAvailable)
         {
@@ -60,6 +60,7 @@ namespace GymBookingSystem.Controllers
             }
         }
 
+        [AllowAnonymous]
         [HttpGet("GetTrainingClassesAtDate")]
         public IActionResult GetTrainingClassesAtDate(DateTime dateTime)
         {
@@ -77,6 +78,7 @@ namespace GymBookingSystem.Controllers
             }
         }
 
+        [AllowAnonymous]
         [HttpGet("GetTrainingClassesAtGym")]
         public IActionResult GetTrainingClassesAtGym(int gymId)
         {

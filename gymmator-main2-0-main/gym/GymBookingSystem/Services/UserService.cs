@@ -259,6 +259,16 @@ namespace GymBookingSystem.Services
             else
                 return null;
         }
+
+        public Booking GetUserBooking(int bookingId)
+        {
+            Booking b = _context.Bookings.Where(x => x.BookingId == bookingId).FirstOrDefault();
+            if (b != null)
+                return b;
+            else
+                return null;
+        }
+
         public Booking UpdateBooking(int bookingId, BookingDto dto)
         {
             Booking b = _context.Bookings.Where(x => x.BookingId == bookingId).FirstOrDefault();

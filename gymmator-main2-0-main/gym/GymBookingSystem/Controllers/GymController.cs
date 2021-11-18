@@ -44,7 +44,7 @@ namespace GymBookingSystem.Controllers
             }
         }
 
-
+        [AllowAnonymous]
         [HttpGet("GetGyms")]
         public IActionResult GetGyms()
         {
@@ -62,6 +62,7 @@ namespace GymBookingSystem.Controllers
             }
         }
 
+        [AllowAnonymous]
         [HttpGet("GetGym")]
         public IActionResult GetGym(int GymId)
         {

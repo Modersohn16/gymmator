@@ -26,7 +26,7 @@ namespace GymBookingSystem.Controllers
             _logger = logger;
         }
 
-
+        [AllowAnonymous]
         [HttpPost("CreateUser")]
         public IActionResult CreateUser(UserDto dto)
         {
@@ -44,7 +44,7 @@ namespace GymBookingSystem.Controllers
             }
         }
     
-        
+        [AllowAnonymous]
         [HttpPost("Login")]
         public IActionResult Login([FromBody]LoginDto dto) 
         {
@@ -66,8 +66,15 @@ namespace GymBookingSystem.Controllers
         [HttpPut("ChangePassword")]
         public IActionResult ChangePassword([FromBody]ChangePasswordDto dto)
         {
+            if(GetUserId() != dto.UserId)
+            {
+                Log.Warning($"User {GetUserId()} attempted to change user {dto.UserId} password.");
+                return Forbid();
+            }
+
             Log.Information("Attempting to change password.");
             string message = _UserService.ChangePassword(dto.UserId, dto.NewPassword, dto.OldPassword);
+
             if(message.Contains("successfully"))
             {
                 Log.Information("Password changed successfully.");
@@ -85,8 +92,15 @@ namespace GymBookingSystem.Controllers
         [HttpPost("CreateBooking")]
         public IActionResult CreateBooking(BookingDto dto)
         {
+            if (GetUserId() != dto.UserId)
+            {
+                Log.Warning($"User {GetUserId()} attempted to create booking for other user {dto.UserId}.");
+                return Forbid();
+            }
+
             Log.Information("Attempting to create booking.");
             Booking b = _UserService.CreateBooking(dto);
+
             if (b == null)
             {
                 Log.Error("Failed to create booking.");
@@ -113,6 +127,30 @@ namespace GymBookingSystem.Controllers
             }
             else
             {
+                Log.Information("Bookings retrieved successfully. " + b);
+                return Ok(b);
+            }
+        }
+
+        [Authorize]
+        [HttpGet("GetUserBooking")]
+        public IActionResult GetUserBooking(int bookingId)
+        {
+            Log.Information("Attempting to retrieve user booking.");
+            int userId = GetUserId();
+            Booking b = _UserService.GetUserBooking(bookingId);
+            if (b != null && GetUserId() != b.UserId)
+            {
+                Log.Warning($"User {GetUserId()} attempted to get other user {userId} booking.");
+                return Forbid();
+            }
+            if (b == null)
+            {
+                Log.Error("Failed to retrieve user booking.");
+                return BadRequest();
+            }
+            else
+            {
                 Log.Information("Booking retrieved successfully. " + b);
                 return Ok(b);
             }
@@ -122,6 +160,12 @@ namespace GymBookingSystem.Controllers
         [HttpDelete("DeleteUser")]
         public IActionResult DeleteUser(int UserId)
         {
+            if (GetUserId() != UserId)
+            {
+                Log.Warning($"User {GetUserId()} attempted to delete other user {UserId}.");
+                return Forbid();
+            }
+
             Log.Information("Attempting to delete user.");
             User U = _UserService.DeleteUser(UserId);
             if (U == null)
@@ -140,8 +184,18 @@ namespace GymBookingSystem.Controllers
         [HttpDelete("DeleteBooking")]
         public IActionResult DeleteBooking(int bookingId)
         {
+
+            Booking b2 = _UserService.GetUserBooking(bookingId);
+
+            if (b2 != null && GetUserId() != b2.UserId)
+            {
+                Log.Warning($"User {GetUserId()} attempted to delete other user {b2.UserId} booking.");
+                return Forbid();
+            }
+
             Log.Information("Attempting to delete booking.");
             Booking b = _UserService.DeleteBooking(bookingId);
+
             if (b == null)
             {
                 Log.Error("Failed to delete booking.");
@@ -158,6 +212,12 @@ namespace GymBookingSystem.Controllers
         [HttpPut("UpdateUser")]
         public IActionResult UpdateUser(int userId, UpdateUserDto dto)
         {
+            if (GetUserId() != userId)
+            {
+                Log.Warning($"User {GetUserId()} attempted to change other user {userId}.");
+                return Forbid();
+            }
+
             Log.Information("Attempting to update user: " + dto);
             User u = _UserService.UpdateUser(userId, dto);
             if (u == null)
@@ -178,6 +238,13 @@ namespace GymBookingSystem.Controllers
         {
             Log.Information("Attempting to update booking: " + dto);
             Booking b = _UserService.UpdateBooking(bookingId, dto);
+
+            if (b != null && GetUserId() != b.UserId)
+            {
+                Log.Warning($"User {GetUserId()} attempted to update other user {b.UserId} booking.");
+                return Forbid();
+            }
+
             if (b == null)
             {
                 Log.Error("Failed to update booking" + dto);
@@ -190,6 +257,7 @@ namespace GymBookingSystem.Controllers
             }
         }
 
+        [AllowAnonymous]
         [HttpPost("ResetPassword")]
         public IActionResult ResetPassword(string username, string email)
         {

@@ -25,6 +25,7 @@ namespace GymBookingSystem.Controllers
             _logger = logger;
         }
 
+        [Authorize(Roles = Role.Admin)]
         [HttpPost("CreateUser")]
         public IActionResult CreateUser(UserDto dto)
         {
@@ -42,7 +43,7 @@ namespace GymBookingSystem.Controllers
             }
         }
 
-        [Authorize]
+        [Authorize(Roles = Role.Admin)]
         [HttpGet("GetUsersBookings")]
         public IActionResult GetUsersBookings(int userId)
         {
@@ -80,7 +81,7 @@ namespace GymBookingSystem.Controllers
             }
         }
 
-        [Authorize]
+        [Authorize(Roles = Role.Admin)]
         [HttpDelete("DeleteUser")]
         public IActionResult DeleteUser(int userId)
         {
