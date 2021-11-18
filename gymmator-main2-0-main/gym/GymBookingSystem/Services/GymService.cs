@@ -19,14 +19,9 @@ namespace GymBookingSystem.Services
             var g = _context.Gyms.Where(x => x.GymId == Id).FirstOrDefault();
 
             if (g != null)
-            {
                 return g;
-            }
-
             else
-            {
                 return null;
-            }
         }
 
         public List<Gym> GetGyms()
@@ -34,16 +29,11 @@ namespace GymBookingSystem.Services
             List<Gym> g = _context.Gyms.ToList();
 
             if (g != null)
-            {
                 return g;
-            }
-
             else
-            {
                 return null;
-            }
-
         }
+
         public Gym CreateGym(GymDto dto)
         {
             Gym G = new Gym()
@@ -60,7 +50,6 @@ namespace GymBookingSystem.Services
 
             _context.Gyms.Add(G);
             _context.SaveChanges();
-
             return G;
 
         }
@@ -71,13 +60,11 @@ namespace GymBookingSystem.Services
             Gym g = _context.Gyms.Where(x => x.GymId == GymId).FirstOrDefault();
 
             if (t == null)
-            {
                 return null;
-            }
+
             b.ForEach(x => _context.Bookings.Remove(x));
             t.ForEach(x => _context.TrainingClasses.Remove(x));
             _context.Gyms.Remove(g);
-
             _context.SaveChanges();
             return g;
         }

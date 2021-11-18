@@ -22,7 +22,6 @@ namespace GymBookingSystem
 {
     public class Startup
     {
-        readonly string MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
         public Startup(IConfiguration configuration, IHostingEnvironment env)
         {
             Configuration = configuration;
@@ -64,39 +63,6 @@ namespace GymBookingSystem
                        .AllowAnyHeader();
             }));
 
-            //services.AddCors(options =>
-            //{
-            //    options.AddPolicy(name: MyAllowSpecificOrigins,
-            //                      builder =>
-            //                      {
-            //                          builder.WithOrigins("https://localhost:3000").AllowAnyMethod().AllowAnyHeader();
-            //                      });
-            //});
-
-            //services.AddCors(options =>
-            //{
-            //    // this defines a CORS policy called "default"
-            //    options.AddPolicy("default", policy =>
-            //    {
-            //        policy.WithOrigins("https://localhost:44364").AllowAnyOrigin()
-            //            .AllowAnyHeader()
-            //            .AllowAnyMethod();
-            //    });
-
-                //options.AddPolicy(name: MyAllowSpecificOrigins,
-                //                  builder =>
-                //                  {
-                //                      builder.WithOrigins("https://localhost:3000").AllowAnyMethod().AllowAnyHeader();
-                //                  });
-
-                //options.AddPolicy(name: MyAllowSpecificOrigins,
-                //  builder =>
-                //  {
-                //      builder.WithOrigins("https://localhost:44364").AllowAnyMethod().AllowAnyHeader();
-                //  });
-
-            //});
-            //services.AddControllers();
             services.AddSwaggerGen();
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddScoped<IHasher, Hasher>();
@@ -148,13 +114,11 @@ namespace GymBookingSystem
             app.UseStaticFiles();
             app.UseCookiePolicy();
             app.UseCors("MyPolicy");
-            //app.UseCors(MyAllowSpecificOrigins);
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
             });
-
 
             app.UseMvc(routes =>
             {

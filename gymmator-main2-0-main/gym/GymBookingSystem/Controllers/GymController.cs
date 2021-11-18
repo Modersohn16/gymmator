@@ -34,7 +34,7 @@ namespace GymBookingSystem.Controllers
             Gym g = _GymService.CreateGym(dto);
             if (g == null)
             {
-                Log.Warning("Failed to create gym.");
+                Log.Error("Failed to create gym.");
                 return BadRequest();
             }
             else
@@ -52,7 +52,7 @@ namespace GymBookingSystem.Controllers
             List<Gym> g = _GymService.GetGyms();
             if (g == null)
             {
-                Log.Warning("Failed to retrieve gyms.");
+                Log.Error("Failed to retrieve gyms.");
                 return BadRequest();
             }
             else
@@ -69,7 +69,7 @@ namespace GymBookingSystem.Controllers
             Gym g = _GymService.GetGym(GymId);
             if (g == null)
             {
-                Log.Warning("Failed to retrieve gym.");
+                Log.Error("Failed to retrieve gym.");
                 return BadRequest();
             }
             else
@@ -87,7 +87,7 @@ namespace GymBookingSystem.Controllers
             Gym g = _GymService.DeleteGym(GymId);
             if (g == null)
             {
-                Log.Warning("Failed to delete gym.");
+                Log.Error("Failed to delete gym.");
                 return BadRequest();
             }
             else
@@ -105,7 +105,7 @@ namespace GymBookingSystem.Controllers
             Gym g = _GymService.UpdateGym(GymId, dto);
             if (g == null)
             {
-                Log.Warning("Failed to update gym.");
+                Log.Error("Failed to update gym.");
                 return BadRequest();
             }
             else

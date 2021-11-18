@@ -10,8 +10,8 @@ namespace GymBookingSystem.Services
     public interface ITrainingClassService
     {
         TrainingClass GetTrainingClass(int Id);
-        List<TrainingClass> GetTrainingClasses();
-        TrainingClassListDto GetTrainingClassesAtGym(int GymId);
+        List<TrainingClass> GetTrainingClasses(bool onlyAvailable);
+        TrainingClassListDto GetTrainingClassesAtGym(int gymId);
         List<TrainingClass> GetTrainingClassesAtDate(DateTime dateTime);
         TrainingClass CreateTrainingClass(TrainingClassDto dto);
         TrainingClass DeleteTrainingClass(int TrainingClassId);

@@ -17,9 +17,7 @@ namespace GymBookingSystem
         public DbSet<LoginCredentials> LoginCredentials { get; set; }
         public DbSet<TrainingClass> TrainingClasses { get; set; }
         public DbSet<Role> Roles { get; set; }
-
         public GymContext(DbContextOptions<GymContext> options) : base(options) { }
-
         public DbSet<Trainer> Trainers { get; set; }
     }
 }

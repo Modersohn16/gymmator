@@ -44,10 +44,10 @@ namespace GymBookingSystem.Controllers
         // Show only available classes (not from previous days)
         // optional with boolean
         [HttpGet("GetTrainingClasses")]
-        public IActionResult GetTrainingClasses()
+        public IActionResult GetTrainingClasses(bool onlyAvailable)
         {
             Log.Information("Attempting to retrieve training classes.");
-            List<TrainingClass> t = _TrainingClassService.GetTrainingClasses();
+            List<TrainingClass> t = _TrainingClassService.GetTrainingClasses(onlyAvailable);
             if (t == null)
             {
                 Log.Error("Failed to retrieve training classes.");

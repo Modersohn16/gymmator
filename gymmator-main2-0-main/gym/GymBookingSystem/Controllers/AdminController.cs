@@ -32,7 +32,7 @@ namespace GymBookingSystem.Controllers
             User u = _AdminService.CreateUser(dto);
             if (u == null)
             {
-                Log.Warning("Failed to create user" + dto);
+                Log.Error("Failed to create user" + dto);
                 return BadRequest();
             }
             else
@@ -50,7 +50,7 @@ namespace GymBookingSystem.Controllers
             List<Booking> b = _AdminService.GetUsersBookings(userId);
             if (b == null)
             {
-                Log.Warning("Failed to retrieve user's bookings, userId: " + userId);
+                Log.Error("Failed to retrieve user's bookings, userId: " + userId);
 
                 return BadRequest();
             }
@@ -70,7 +70,7 @@ namespace GymBookingSystem.Controllers
             Trainer t = _AdminService.CreateTrainer(dto);
             if (t == null)
             {
-                Log.Warning("Failed to create trainer.");
+                Log.Error("Failed to create trainer.");
                 return BadRequest();
             }
             else
@@ -88,7 +88,7 @@ namespace GymBookingSystem.Controllers
             User U = _AdminService.DeleteUser(userId);
             if (U == null)
             {
-                Log.Warning("Failed to delete user.");
+                Log.Error("Failed to delete user.");
                 return BadRequest();
             }
             else
@@ -106,7 +106,7 @@ namespace GymBookingSystem.Controllers
             Trainer t = _AdminService.DeleteTrainer(trainerId);
             if (t == null)
             {
-                Log.Warning("Failed to delete trainer.");
+                Log.Error("Failed to delete trainer.");
                 return BadRequest();
             }
             else
@@ -124,7 +124,7 @@ namespace GymBookingSystem.Controllers
             Trainer t = _AdminService.UpdateTrainer(trainerId, dto);
             if (t == null)
             {
-                Log.Warning("Failed to update trainer.");
+                Log.Error("Failed to update trainer.");
                 return BadRequest();
             }
             else
@@ -142,7 +142,7 @@ namespace GymBookingSystem.Controllers
             User u = _AdminService.ChangeRole(userId, title);
             if (u == null)
             {
-                Log.Warning("Failed to change role.");
+                Log.Error("Failed to change role.");
                 return BadRequest();
             }
             else

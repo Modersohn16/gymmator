@@ -68,9 +68,7 @@ namespace GymBookingSystem.Services
                 return "Password changed successfully";
             }
             else
-            {
                 return "Failed to change password ";
-            }
         }
 
 
@@ -80,15 +78,10 @@ namespace GymBookingSystem.Services
             List<TrainingClass> t = _context.TrainingClasses.Where(x => x.GymId == GymId).ToList();
 
             if (t != null)
-            {
                 return t;
-            }
 
             else
-            {
                 return null;
-            }
-
         }
 
         public Booking CreateBooking(BookingDto dto)
@@ -111,15 +104,11 @@ namespace GymBookingSystem.Services
         public List<Booking> GetUsersBookings(int userId)
         {
             List<Booking> b = _context.Bookings.Where(x => x.UserId == userId).ToList();
-            if (b != null)
-            {
-                return b;
-            }
 
+            if (b != null)
+                return b;
             else
-            {
                 return null;
-            }
         }
 
         public Trainer CreateTrainer(TrainerDto dto)
@@ -140,8 +129,10 @@ namespace GymBookingSystem.Services
         public User DeleteUser(int UserId)
         {
             User U = _context.Users.Where(x => x.UserId == UserId).FirstOrDefault();
+
             if (U == null)
                 return null;
+
             List<Booking> b = _context.Bookings.Where(x => x.UserId == UserId).ToList();
             LoginCredentials lc = _context.LoginCredentials.Where(x => x.UserId == UserId).FirstOrDefault();
 
@@ -149,14 +140,15 @@ namespace GymBookingSystem.Services
             b.ForEach(x => _context.Bookings.Remove(x));
             _context.Users.Remove(U);
             _context.SaveChanges();
-
             return U;
         }
         public Trainer DeleteTrainer(int trainerId)
         {
             Trainer t = _context.Trainers.Where(x => x.TrainerId == trainerId).FirstOrDefault();
+
             if (t == null)
                 return null;
+
             _context.Trainers.Remove(t);
             _context.SaveChanges();
             return t;
@@ -164,8 +156,10 @@ namespace GymBookingSystem.Services
         public Trainer UpdateTrainer(int trainerId, TrainerDto dto)
         {
             Trainer t = _context.Trainers.Where(x => x.TrainerId == trainerId).FirstOrDefault();
+
             if (t == null)
                 return null;
+
             t.FirstName = dto.FirstName;
             t.LastName = dto.LastName;
             t.Email = dto.Email;
@@ -177,8 +171,10 @@ namespace GymBookingSystem.Services
         public User ChangeRole(int userId, string title)
         {
             User u = _context.Users.Where(x => x.UserId == userId).FirstOrDefault();
+
             if (u == null)
                 return null;
+
             var userRole = _context.Roles.Where(x => x.Title == title).FirstOrDefault();
             u.Role = userRole;
             u.RoleId = userRole.Id;

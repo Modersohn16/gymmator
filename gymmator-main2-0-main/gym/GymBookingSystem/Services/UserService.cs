@@ -217,20 +217,15 @@ namespace GymBookingSystem.Services
         public string ChangePassword(int userId, string newPassword, string oldPassword)
         {
             if(oldPassword == newPassword)
-            {
                 return "Old password and new password are same";
-            }
+
             LoginCredentials lc = _context.LoginCredentials.Where(x => x.UserId == userId).FirstOrDefault();
 
             if(lc == null)
-            {
                 return "Failed to change password ";
-            }
 
             if (!_hasher.ValidatePassword(oldPassword, lc.PasswordHash))
-            {
                 return "Incorrect old password";
-            }
 
             var hash = _hasher.CreateHash(newPassword);
             lc.PasswordHash = hash;
@@ -260,23 +255,17 @@ namespace GymBookingSystem.Services
         {
             List<Booking> b = _context.Bookings.Where(x => x.UserId == userId).ToList();
             if (b != null)
-            {
                 return b;
-            }
-
             else
-            {
                 return null;
-            }
         }
         public Booking UpdateBooking(int bookingId, BookingDto dto)
         {
             Booking b = _context.Bookings.Where(x => x.BookingId == bookingId).FirstOrDefault();
 
             if (b == null)
-            {
                 return null;
-            }
+
             b.Date = dto.Date;
             b.GymId = dto.GymId;
             b.Timestamp = dto.Timestamp;
@@ -295,9 +284,8 @@ namespace GymBookingSystem.Services
             Booking b = _context.Bookings.Where(x => x.BookingId == bookingId).FirstOrDefault();
 
             if (b == null)
-            {
                 return null;
-            }
+
             _context.Bookings.Remove(b);
             _context.SaveChanges();
 
@@ -311,9 +299,8 @@ namespace GymBookingSystem.Services
             LoginCredentials lc = _context.LoginCredentials.Where(x => x.UserId == UserId).FirstOrDefault();
             
             if(lc == null)
-            {
                 return null;
-            }
+
             _context.LoginCredentials.Remove(lc);
             b.ForEach(x => _context.Bookings.Remove(x));
             _context.Users.Remove(U);
