@@ -299,7 +299,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"gymId\": 1,\r\n  \"userId\": {{TestUserId}},\r\n  \"timestamp\": \"2021-11-15T07:32:56.143Z\",\r\n  \"date\": \"2021-11-17T07:32:56.143Z\",\r\n  \"trainerId\": 1,\r\n  \"trainingClassId\": 2\r\n}",
+							"raw": "{\r\n  \"gymId\": 1,\r\n  \"userId\": {{TestUserId}},\r\n  \"trainerId\": 1,\r\n  \"trainingClassId\": 2\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -530,7 +530,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"gymId\": 1006,\r\n  \"userId\": {{TestUserId}},\r\n  \"timestamp\": \"2021-11-15T07:32:56.143Z\",\r\n  \"date\": \"2021-11-15T07:32:56.143Z\",\r\n  \"trainerId\": 2,\r\n  \"trainingClassId\": 1009\r\n}",
+							"raw": "{\r\n  \"gymId\": 1,\r\n  \"userId\": {{TestUserId}},\r\n  \"trainerId\": 1,\r\n  \"trainingClassId\": 3\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"

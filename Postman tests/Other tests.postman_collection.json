@@ -18,6 +18,9 @@
 									"var jsonData = JSON.parse(responseBody);\r",
 									"pm.environment.set(\"BearerToken\", jsonData.token);\r",
 									"\r",
+									"var jsonData = JSON.parse(responseBody);\r",
+									"pm.environment.set(\"TestUserId\", jsonData.userId);\r",
+									"\r",
 									"pm.test(\"Status code is \" + pm.response.code, function ()\r",
 									"{\r",
 									"    pm.response.to.have.status(200);\r",
@@ -95,7 +98,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"userId\": 90,\r\n  \"newPassword\": \"qwerty1\",\r\n  \"oldPassword\": \"qwertyyy\"\r\n}",
+							"raw": "{\r\n  \"userId\": {{TestUserId}},\r\n  \"newPassword\": \"qwerty1\",\r\n  \"oldPassword\": \"qwertyyy\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"

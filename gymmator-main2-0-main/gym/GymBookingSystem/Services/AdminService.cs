@@ -86,13 +86,18 @@ namespace GymBookingSystem.Services
 
         public Booking CreateBooking(BookingDto dto)
         {
+            TrainingClass t = _context.TrainingClasses.Where(x => x.TrainingClassId == dto.TrainingClassId).FirstOrDefault();
+
+            if (t == null)
+                return null;
+
             Booking b = new Booking()
             {
                 GymId = dto.GymId,
                 UserId = dto.UserId,
                 TrainerId = dto.TrainerId,
-                Timestamp = dto.Timestamp,
-                Date = dto.Date,
+                Timestamp = DateTime.Now,
+                Date = t.Start,
                 TrainingClassId = dto.TrainingClassId
             };
 

@@ -236,13 +236,16 @@ namespace GymBookingSystem.Services
 
         public Booking CreateBooking(BookingDto dto)
         {
+            TrainingClass t = _context.TrainingClasses.Where(x => x.TrainingClassId == dto.TrainingClassId).FirstOrDefault();
+            if (t == null)
+                return null;
             Booking b = new Booking()
             {
                 GymId = dto.GymId,
                 UserId = dto.UserId,
                 TrainerId = dto.TrainerId,
-                Timestamp = dto.Timestamp,
-                Date = dto.Date,
+                Timestamp = DateTime.Now,
+                Date = t.Start,
                 TrainingClassId = dto.TrainingClassId
             };
 
@@ -271,14 +274,19 @@ namespace GymBookingSystem.Services
 
         public Booking UpdateBooking(int bookingId, BookingDto dto)
         {
+            TrainingClass t = _context.TrainingClasses.Where(x => x.TrainingClassId == dto.TrainingClassId).FirstOrDefault();
+
+            if (t == null)
+                return null;
+
             Booking b = _context.Bookings.Where(x => x.BookingId == bookingId).FirstOrDefault();
 
             if (b == null)
                 return null;
 
-            b.Date = dto.Date;
+            b.Date = t.Start;
             b.GymId = dto.GymId;
-            b.Timestamp = dto.Timestamp;
+            b.Timestamp = DateTime.Now;
             b.TrainerId = dto.TrainerId;
             b.TrainingClassId = dto.TrainingClassId;
             b.UserId = dto.UserId;
