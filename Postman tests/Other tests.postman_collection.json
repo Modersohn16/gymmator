@@ -1,0 +1,169 @@
+{
+	"info": {
+		"_postman_id": "e1c85acf-4efd-4155-9d56-86e3e8bbfc57",
+		"name": "Other tests",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Change password - incorrect old password",
+			"item": [
+				{
+					"name": "Login (User)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);\r",
+									"pm.environment.set(\"BearerToken\", jsonData.token);\r",
+									"\r",
+									"pm.test(\"Status code is \" + pm.response.code, function ()\r",
+									"{\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"  pm.test(\"Response time is less than 400ms\", () => {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(400);\r",
+									"  });\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"username\": \"User\",\r\n  \"password\": \"Password1!\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}api/User/Login",
+							"host": [
+								"{{URL}}api"
+							],
+							"path": [
+								"User",
+								"Login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Change Password - incorrect old password",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is \" + pm.response.code, function ()\r",
+									"{\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									"  pm.test(\"Response time is less than 400ms\", () => {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(400);\r",
+									"  });"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{BearerToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"userId\": 90,\r\n  \"newPassword\": \"qwerty1\",\r\n  \"oldPassword\": \"qwertyyy\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}api/User/ChangePassword",
+							"host": [
+								"{{URL}}api"
+							],
+							"path": [
+								"User",
+								"ChangePassword"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Login - Wrong password",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is \" + pm.response.code, function ()\r",
+							"{\r",
+							"    pm.response.to.have.status(400);\r",
+							"});\r",
+							"\r",
+							"  pm.test(\"Response time is less than 400ms\", () => {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(400);\r",
+							"  });"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"username\": \"User\",\r\n  \"password\": \"Password1!!!\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{URL}}api/User/Login",
+					"host": [
+						"{{URL}}api"
+					],
+					"path": [
+						"User",
+						"Login"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
