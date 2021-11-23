@@ -173,7 +173,7 @@ namespace GymBookingSystem.Services
             return t;
         }
 
-        public User ChangeRole(int userId, string title)
+        public ChangeRoleDto ChangeRole(int userId, string title)
         {
             User u = _context.Users.Where(x => x.UserId == userId).FirstOrDefault();
 
@@ -183,7 +183,14 @@ namespace GymBookingSystem.Services
             var userRole = _context.Roles.Where(x => x.Title == title).FirstOrDefault();
             u.Role = userRole;
             u.RoleId = userRole.Id;
-            return u;
+            ChangeRoleDto dto = new ChangeRoleDto();
+            dto.UserId = u.UserId;
+            dto.FirstName = u.FirstName;
+            dto.LastName = u.LastName;
+            dto.Email = u.Email;
+            dto.Title = u.Role.Title;
+           
+            return dto;
         }
     }
 }

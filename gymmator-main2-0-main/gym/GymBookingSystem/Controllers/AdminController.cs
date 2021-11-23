@@ -140,7 +140,7 @@ namespace GymBookingSystem.Controllers
         public IActionResult ChangeRole(int userId, string title)
         {
             Log.Information("Attempting to change role of user" + userId + " to " + title);
-            User u = _AdminService.ChangeRole(userId, title);
+            ChangeRoleDto u = _AdminService.ChangeRole(userId, title);
             if (u == null)
             {
                 Log.Error("Failed to change role.");

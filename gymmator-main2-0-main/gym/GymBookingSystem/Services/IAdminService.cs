@@ -15,6 +15,6 @@ namespace GymBookingSystem.Services
         Trainer CreateTrainer(TrainerDto dto);
         Trainer DeleteTrainer(int TrainerId);
         Trainer UpdateTrainer(int trainerId, TrainerDto dto);
-        User ChangeRole(int userId, string title);
+        ChangeRoleDto ChangeRole(int userId, string title);
     }
 }
